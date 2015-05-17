@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source lib/*.sh
+
+ed_cmd "/bin/true"
+
+ed_main() {
+  apt-get update
+
+  apt-get install -y \
+      supervisor cron exim4-daemon-light \
+      curl ca-certificates
+
+  ed_apt_clean
+}
+
+ed_bocker() {
+  ed_main
+
+  if [[ -d "enabled/" ]]; then
+    ed_copy enabled/ example/
+  else
+    echo >&2 "#"
+    echo >&2 "# :: Error: Please add some local files to ./enabled/ directory."
+    echo >&2 "#"
+    exit 1
+  fi
+}
