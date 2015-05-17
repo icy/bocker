@@ -30,7 +30,12 @@ set -u
 
 ed_reset() {
   for _matter in \
-    ${1:-__MATTER_ENV__ __MATTER_ON_BUILD__ __MATTER_VOLUME__ __MATTER_EXPOSE__}; \
+    ${1:-\
+      __MATTER_ENV__ \
+      __MATTER_ONBUILD__ \
+      __MATTER_VOLUME__ \
+      __MATTER_EXPOSE__
+    }; \
   do
     export $_matter=
   done
@@ -266,4 +271,4 @@ echo "${__MATTER_CMD__:-}" | __do_matter -uk1
 echo ""
 echo "${__MATTER_ENTRYPOINT__:-}" | __do_matter -uk1
 echo ""
-echo "${__MATTER_ONBUILD__:-}" | __do_matter -uk1
+echo "${__MATTER_ONBUILD__:-}" | __do_matter -k1
