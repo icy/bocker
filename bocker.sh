@@ -50,7 +50,7 @@ ed_env() {
 }
 
 ed_onbuild() {
-  export __MATTER_ON_BUILD__="${__MATTER_ON_BUILD__:-}^x^x^ONBUILD $@"
+  export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}^x^x^ONBUILD $@"
 }
 
 ed_expose() {
@@ -265,3 +265,5 @@ echo ""
 echo "${__MATTER_CMD__:-}" | __do_matter -uk1
 echo ""
 echo "${__MATTER_ENTRYPOINT__:-}" | __do_matter -uk1
+echo ""
+echo "${__MATTER_ONBUILD__:-}" | __do_matter -uk1

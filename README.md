@@ -87,6 +87,7 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 * `ed_env`: Define new `ENV` instruction;
 * `ed_expose`: Specify a list of exposed ports;
 * `ed_volume`: Specify a list of volumes;
+* `ed_onbuild`: Specify trigger on the descendant image build;
 * `ed_cmd`: Define your `CMD` statement;
 * `ed_entrypoint`: Define your `ENTRYPOINT` statement;
 * `ed_ship`: Define a list of methods to be shipped to the image;
@@ -98,8 +99,8 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 All these commands can be used multiple times, and/or be put in
 your base libraries. (See `examples/lib/core.sh`.)
 
-The last statement of `ed_from` (`ed_maintainer`, `ed_cmd`) will win;
-other functions have additive effect.
+The last statement of `ed_from` (`ed_maintainer`, `ed_cmd`, `ed_entrypoint`)
+will win; other functions have additive effect.
 
 ### Main matter
 
