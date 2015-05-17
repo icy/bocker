@@ -125,6 +125,8 @@ __ed_ship_method() {
   "ed_run")      shift; echo ""; echo "RUN $@"; return 0;;
   esac
 
+  __ed_ensure_method $METHOD || exit 127
+
   __ed_method_body $METHOD \
   | awk -vMETHOD=$METHOD \
     '
