@@ -8,9 +8,7 @@ ed_cmd "/bin/true"
 ed_main() {
   apt-get update
 
-  apt-get install -y \
-      supervisor cron exim4-daemon-light \
-      curl ca-certificates
+  apt-get install -y curl
 
   ed_apt_clean
 }
