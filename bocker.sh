@@ -89,7 +89,7 @@ ed_entrypoint() {
 
 __ed_bocker_filter() {
   __ed_method_body ed_bocker \
-  | sed -e 's#\b\(ed_[a-z0-9]\+\)\b#__ed_ship_method \1#gi'
+  | sed -e 's#\b\(ed_[a-z0-9]\+\)#__ed_ship_method \1#gi'
 }
 
 # Print the (body) definition of a function
