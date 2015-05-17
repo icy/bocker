@@ -98,7 +98,7 @@ __do_matter() {
   | sort $_sort_args
 }
 
-__ensure_method() {
+__ed_ensure_method() {
   if [[ "$(type -t ${1:-})" != "function" ]]; then
     echo >&2 ":: Bocker: method '${1:-}' not found or not a function"
     return 1
@@ -153,7 +153,7 @@ __ed_ship() {
   local _methods="$(echo "${__MATTER_SHIP__:-}" | __do_matter -uk1)"
 
   for METHOD in $_methods; do
-    __ensure_method ed_$METHOD || return 127
+    __ed_ensure_method ed_$METHOD || return 127
   done
 
   echo ""
@@ -209,7 +209,7 @@ done
 # Basic checks
 ########################################################################
 
-__ensure_method ed_bocker || exit 127
+__ed_ensure_method ed_bocker || exit 127
 
 ########################################################################
 # Shipping the contents
