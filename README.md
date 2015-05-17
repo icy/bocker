@@ -55,12 +55,12 @@ please report the problem and it would be solved in the next `Bocker` release.
 
 ## Syntax of `Bockerfile`
 
-All `Bockerfile` are `Bash` source files. That means you can write
+All `Bockerfile`s are `Bash` source files. That means you can write
 your source in some small files, and include them in other files.
 
 The first rule is that every method is started with `ed_`.
 
-### The front matter
+### Front matter
 
 There are some basic methods to define your meta information.
 For your overview, let's see:
@@ -77,16 +77,16 @@ ed_ship        foobar
 
 ````
 
-* `ed_from`: Define your `FROM` information.
-* `ed_maintainer`: Define your `MAINTAINER` information.
-* `ed_env`: Define new `ENV` instruction
-* `ed_expose`: Specify a list of exposed ports
-* `ed_volume`: Specify a list of volumes
-* `ed_cmd`: Define your `CMD` statement.
-* `ed_ship`: Define a list of methods to be shipped to the image.
+* `ed_from`: Define your `FROM` information;
+* `ed_maintainer`: Define your `MAINTAINER` information;
+* `ed_env`: Define new `ENV` instruction;
+* `ed_expose`: Specify a list of exposed ports;
+* `ed_volume`: Specify a list of volumes;
+* `ed_cmd`: Define your `CMD` statement;
+* `ed_ship`: Define a list of methods to be shipped to the image;
   That means, you can define a function `ed_foobar`, and call `ed_ship foobar`
   to make this function available to `Docker` at build time and run time.
-  Actually, functions's definition is written to the file `/bocker.sh`
+  Actually, functions' definitions are written to the file `/bocker.sh`
   in the result image, and that will be included at every `RUN`.
 
 All these commands can be used multiple times, and/or be put in
@@ -95,7 +95,7 @@ your base libraries. (See `examples/lib/core.sh`.)
 The last statement of `ed_from` (`ed_maintainer`, `ed_cmd`) will win;
 other functions have additive effect.
 
-### The main matter
+### Main matter
 
 You can define your set of methods as `Bash` functions, each of them
 has a name started by `ed_`. For example, in `examples/lib/debian.sh`,
@@ -114,14 +114,16 @@ It can have two special functions
 * `ed_copy`: Define your `COPY` statement
 * `ed_add`: Define your `ADD` statement
 
-`Bocker` will read the contents of this function,
+`Bocker` will read the contents of this `ed_bocker` function,
 replace every appearance of `ed_*` by `__ed_ship_method ed_*`.
 That means, if you type `ed_apt_clean`, `Bocker` will invoke
 `__ed_ship_method ed_apt_clean` for you.
 
-Because the is actually replace-execute trick,
-it's your duty to make sure the definition of `ed_bocker` as simple
+Because this is actually a replace-execute trick,
+it's your duty to make your definition of `ed_bocker` as simple
 as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
+If you have to do that, put your stuff under some functions,
+ship them to the image with `ed_ship`, and that's just enough.
 
 ## WTF. No `ENTRY_POINT` support!
 
