@@ -1,6 +1,6 @@
 ## Description
 
-`Bocker` makes your `Dockerfile` resuable.
+`Bocker` makes your `Dockerfile` reusable.
 The name is combined from `B(ash)` and `(D)ocker`.
 
 `Dockerfile` is a mix of shell commands, run-time settings and stuff.
