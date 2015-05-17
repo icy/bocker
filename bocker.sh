@@ -197,6 +197,25 @@ ed_maintainer  "Anh K. Huynh <kyanh@theslinux.org>"
 ed_env         DEBIAN_FRONTEND noninteractive
 ed_reset       # reset all environments
 
+readonly -f \
+  __do_matter \
+  __ed_bocker_filter \
+  __ed_configure_sh \
+  __ed_method_body \
+  __ed_method_body_join \
+  __ed_ship \
+  __ed_ship_method \
+  __ed_ensure_method \
+  ed_cmd \
+  ed_env \
+  ed_expose \
+  ed_from \
+  ed_maintainer \
+  ed_onbuild \
+  ed_reset \
+  ed_ship \
+  ed_volume
+
 ########################################################################
 # Now loading all users definitions
 ########################################################################
