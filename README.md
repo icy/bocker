@@ -130,9 +130,11 @@ as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
 If you have to do that, put your stuff under some functions,
 ship them to the image with `ed_ship`, and that's just enough.
 
-## WTF. No `ENTRY_POINT` support!
+## WTF. No `ENTRYPOINT` support!
 
 No, at the moment. But you will see it very soon.
+
+The true story is that I haven't used `ENTRYPOINT`.
 
 ## History
 
