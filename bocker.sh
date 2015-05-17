@@ -122,6 +122,7 @@ __ed_ship_method() {
   "ed_copy")     shift; echo ""; echo "COPY $@"; return 0 ;;
   "ed_user")     shift; echo ""; echo "USER $@"; return 0 ;;
   "ed_workdir")  shift; echo ""; echo "WORKDIR $@"; return 0 ;;
+  "ed_run")      shift; echo ""; echo "RUN $@"; return 0;;
   esac
 
   __ed_method_body $METHOD \
