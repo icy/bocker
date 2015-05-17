@@ -114,10 +114,12 @@ don't define it.
 
 This function should not contain any function from `PREAMBLE` section.
 
-It can have two special functions
+It can have some special functions
 
 * `ed_copy`: Define your `COPY` statement
 * `ed_add`: Define your `ADD` statement
+* `ed_user`: Define your `USER` statement
+* `ed_workdir`: Define your `WORKDIR` statement
 
 `Bocker` will read the contents of this `ed_bocker` function,
 replace every appearance of `ed_*` by `__ed_ship_method ed_*`.
