@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source lib/*.sh
+source lib/core.sh
+source lib/debian.sh
 
 ed_cmd "/bin/true"
 
