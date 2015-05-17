@@ -78,8 +78,9 @@ ed_expose      80
 ed_volume      /example.net/
 ed_cmd         '["/supervisor.sh", "foo", "bar"]'
 ed_ship        foobar
-
 ````
+
+Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 
 * `ed_from`: Define your `FROM` information;
 * `ed_maintainer`: Define your `MAINTAINER` information;
