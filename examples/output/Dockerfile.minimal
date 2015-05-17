@@ -18,7 +18,7 @@ RUN set -eux; if [[ -f /bocker.sh ]]; then source /bocker.sh; fi; ed_apt_clean()
 # Bocker method => ed_main
 RUN set -eux; echo ":: Bocker method => ed_main" >/dev/null; source /bocker.sh;  apt-get update; apt-get install -y supervisor cron exim4-daemon-light curl ca-certificates; ed_apt_clean
 
-COPY ed_copy enabled/ example/
+COPY ed_copy enabled/* /example/
 
 
 

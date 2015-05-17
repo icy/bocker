@@ -19,7 +19,7 @@ ed_bocker() {
   ed_main
 
   if [[ -d "enabled/" ]]; then
-    ed_copy enabled/ example/
+    ed_copy enabled/* /example/
   else
     echo >&2 "#"
     echo >&2 "# :: Error: Please add some local files to ./enabled/ directory."
