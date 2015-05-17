@@ -109,8 +109,8 @@ __ed_ship_method() {
   local METHOD="$1"
 
   case $METHOD in
-  "ed_add")   echo ""; echo "ADD $@"; return 0 ;;
-  "ed_copy")  echo ""; echo "COPY $@"; return 0 ;;
+  "ed_add")   shift; echo ""; echo "ADD $@"; return 0 ;;
+  "ed_copy")  shift; echo ""; echo "COPY $@"; return 0 ;;
   esac
 
   __ed_method_body $METHOD \
