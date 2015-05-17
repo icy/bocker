@@ -35,12 +35,16 @@ to continue
 
 ````
 $ mkdir enabled/
+$ touch enabled/test.txt
 $ ../bocker.sh Bockerfile.minimal
 ````
 
 New contents are exactly a `Dockerfile` for your build.
 FYI, that will create an image with some basic packages installed
 (`cron`, `exim`, `curl`, ...)
+
+The sample `Dockerfile` output is found under
+  `examples/output/Dockerfile.minimal`.
 
 ## Requirements
 
