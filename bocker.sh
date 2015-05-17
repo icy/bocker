@@ -78,6 +78,10 @@ ed_cmd() {
   export __MATTER_CMD__="CMD $@"
 }
 
+ed_entrypoint() {
+  export __MATTER_ENTRYPOINT__="ENTRYPOINT $@"
+}
+
 __ed_bocker_filter() {
   __ed_method_body ed_bocker \
   | sed -e 's#\b\(ed_[a-z0-9]\+\)\b#__ed_ship_method \1#gi'
@@ -207,6 +211,7 @@ readonly -f \
   __ed_ship_method \
   __ed_ensure_method \
   ed_cmd \
+  ed_entrypoint \
   ed_env \
   ed_expose \
   ed_from \
@@ -258,3 +263,5 @@ echo ""
 echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk2
 echo ""
 echo "${__MATTER_CMD__:-}" | __do_matter -uk1
+echo ""
+echo "${__MATTER_ENTRYPOINT__:-}" | __do_matter -uk1

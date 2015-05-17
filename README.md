@@ -88,6 +88,7 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 * `ed_expose`: Specify a list of exposed ports;
 * `ed_volume`: Specify a list of volumes;
 * `ed_cmd`: Define your `CMD` statement;
+* `ed_entrypoint`: Define your `ENTRYPOINT` statement;
 * `ed_ship`: Define a list of methods to be shipped to the image;
   That means, you can define a function `ed_foobar`, and call `ed_ship foobar`
   to make this function available to `Docker` at build time and run time.
@@ -131,12 +132,6 @@ it's your duty to make your definition of `ed_bocker` as simple
 as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
 If you have to do that, put your stuff under some functions,
 ship them to the image with `ed_ship`, and that's just enough.
-
-## WTF. No `ENTRYPOINT` support!
-
-No, at the moment. But you will see it very soon.
-
-The true story is that I haven't used `ENTRYPOINT`.
 
 ## History
 
