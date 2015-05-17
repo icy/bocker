@@ -186,16 +186,6 @@ __ed_configure_sh() {
   fi
 }
 
-ed_copy() {
-  echo >&2 "# Wrong place. This function $FUNCNAME must be in PREAMBLE."
-  exit 1
-}
-
-ed_add() {
-  echo >&2 "# Wrong place. This function $FUNCNAME must be in PREAMBLE."
-  exit 1
-}
-
 ########################################################################
 # All default settings
 ########################################################################
