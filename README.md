@@ -98,6 +98,7 @@ ed_expose      80
 ed_volume      /example.net/
 ed_cmd         '["/supervisor.sh", "foo", "bar"]'
 ed_ship        foobar
+# ...
 ````
 
 Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
@@ -114,7 +115,11 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
   That means, you can define a function `ed_foobar`, and call `ed_ship ed_foobar`
   to make this function available to `Docker` at build time and run time.
   Actually, functions' definitions are written to the file `/bocker.sh`
-  in the result image, and that will be included at every `RUN`.
+  in the result image, and that will be included at every `RUN`;
+* `ed_ship --later`: Like `ed_ship`, but the contents are shipped at
+  the very end of `Dockerfile`. This is very useful when the functions
+  are only needed at the run-time, because that really speeds up
+  your build process. See example in `examples/lib/debian.sh`.)
 
 All these commands can be used multiple times, and/or be put in
 your base libraries. (See `examples/lib/core.sh`.)
