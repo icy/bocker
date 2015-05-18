@@ -7,9 +7,6 @@ MAINTAINER My name <myemail@example.net>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# On Debian-based system, /bin/sh is /bin/dash by default.
-RUN set -eux; echo 'dash dash/sh boolean false' | debconf-set-selections; dpkg-reconfigure -f noninteractive dash
-
 # Bocker method => __ed_ship
 # * The output is /bocker.sh in the result image.
 # * List of methods: ed_apt_clean ed_apt_purge.
