@@ -30,7 +30,7 @@ set -u
 
 ed_reset() {
   for _matter in \
-    ${1:-\
+    ${@:-\
       __MATTER_ENV__ \
       __MATTER_ONBUILD__ \
       __MATTER_VOLUME__ \
