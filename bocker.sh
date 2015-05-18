@@ -241,7 +241,11 @@ done
 # Basic checks
 ########################################################################
 
-__ed_ensure_method ed_bocker || exit 127
+__ed_ensure_method ed_bocker \
+|| {
+  echo >&2 ":: Syntax: $0 Bockerfile(s)..."
+  exit 127
+}
 
 ########################################################################
 # Shipping the contents
