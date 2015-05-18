@@ -90,7 +90,7 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 * `ed_cmd`: Define your `CMD` statement;
 * `ed_entrypoint`: Define your `ENTRYPOINT` statement;
 * `ed_ship`: Define a list of methods to be shipped to the image;
-  That means, you can define a function `ed_foobar`, and call `ed_ship foobar`
+  That means, you can define a function `ed_foobar`, and call `ed_ship ed_foobar`
   to make this function available to `Docker` at build time and run time.
   Actually, functions' definitions are written to the file `/bocker.sh`
   in the result image, and that will be included at every `RUN`.
