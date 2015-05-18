@@ -156,6 +156,7 @@ __ed_ship_method() {
     '
 }
 
+# FIXME: This will not work with multiple-line strings or contact.
 __ed_method_body_join() {
   local METHOD="$1"
   awk -vMETHOD="$METHOD" \
