@@ -1,9 +1,9 @@
 #!/bin/bash
-
+#
 # Purpose: A Dockerfile compiler
 # Author : Anh K. Huynh <kyanh@theslinux.org>
 # License: MIT
-
+#
 # Copyright © 2015 Anh K. Huynh
 #
 # Permission is hereby granted, free of charge, to any person
@@ -201,19 +201,6 @@ __ed_ship() {
   __ed_ship_encoded_data $_encoded_data
 }
 
-__ed_configure_sh() {
-  echo ""
-  echo "$__FROM" | grep -qiE '(debian|ubuntu)'
-
-  if [[ $? -eq 0 ]]; then
-    echo "# On Debian-based system, /bin/sh is /bin/dash by default."
-    echo "RUN set -eux; echo 'dash dash/sh boolean false' | debconf-set-selections; dpkg-reconfigure -f noninteractive dash"
-  else
-    echo "# On non Debian-based system, you may need to fix /bin/sh manually."
-    echo "RUN /bin/sh -c 'declare >/dev/null' || { echo >&2 \":: Container shell doesn't have 'declare' method.\"; exit 127; }"
-  fi
-}
-
 ########################################################################
 # All default settings
 ########################################################################
@@ -226,7 +213,6 @@ ed_reset       # reset all environments
 readonly -f \
   __do_matter \
   __ed_bocker_filter \
-  __ed_configure_sh \
   __ed_method_definition \
   __ed_ship \
   __ed_ship_method \
@@ -274,7 +260,6 @@ if [[ -n "${__MATTER_ENV__:-}" ]]; then
   echo "${__MATTER_ENV__:-}" | __do_matter -uk1
 fi
 
-__ed_configure_sh
 __ed_ship || exit 127
 
 while read METHOD; do
