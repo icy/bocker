@@ -136,8 +136,6 @@ ship them to the image with `ed_ship`, and that's just enough.
 
 ## Important notes
 
-* Don't use `local` statement for any `ed_*` declaration, because
-  the body of `ed_*` will be come public;
 * `ed_bocker` is executed locally at run time, on your local machine.
   This is dangerous. Please don't add too much codes inside `ed_bocker`.
   That function should only contain `ed_*` methods.
