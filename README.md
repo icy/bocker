@@ -45,6 +45,11 @@ FYI, that will create an image with `curl` installed.
 The sample `Dockerfile` output is found under
   `examples/output/Dockerfile.minimal`.
 
+## Other examples
+
+* `Bockerfile`: https://github.com/icy/docker/blob/master/supervisor/Bockerfile;
+* and its output: https://github.com/icy/docker/blob/master/supervisor/Dockerfile
+
 ## Requirements
 
 `Bocker` requires the popular tools:
