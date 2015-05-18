@@ -47,8 +47,12 @@ The sample `Dockerfile` output is found under
 
 ## Requirements
 
-`Bocker` requires `Bash` on your local machine,
-and that the base image has `Bash` for `/bin/sh`.
+`Bocker` requires the popular tools:
+
+* On local machine: `Bash`, `base64`, `grep`, `sed, `gawk`;
+* On base image: `Bash` for `/bin/sh`, `base64`
+
+`base64` is a basic tool from `coreutils` package.
 
 On `Debian`-based system, `/bin/sh` is often `/bin/dash`,
 but `Bocker` will fix that automatically for you.
