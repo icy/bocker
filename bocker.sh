@@ -28,7 +28,7 @@
 
 set -u
 
-export BOCKER_VERSION=1.0.1
+export BOCKER_VERSION=1.1.1
 
 ed_reset() {
   for _matter in \
@@ -134,30 +134,53 @@ __ed_ship_encoded_data() {
 }
 
 __ed_ship_method() {
-  local METHOD="$1"
+  local _nextop="$1"
+  local _methods=""
+  local _count=0
 
-  case $METHOD in
+  case $_nextop in
   "ed_add")      shift; echo ""; echo "ADD $@"; return 0 ;;
   "ed_copy")     shift; echo ""; echo "COPY $@"; return 0 ;;
   "ed_user")     shift; echo ""; echo "USER $@"; return 0 ;;
   "ed_workdir")  shift; echo ""; echo "WORKDIR $@"; return 0 ;;
   "ed_run")      shift; echo ""; echo "RUN $@"; return 0;;
+  "ed_group")    shift; _nextop="$@" ;;
   esac
 
-  __ed_ensure_method $METHOD || exit 127
+  for METHOD in $_nextop; do
+    [[ "$METHOD" != "__ed_ship_method" ]] \
+    || continue
+
+    __ed_ensure_method $METHOD || exit 127
+    _methods="$METHOD${_methods:+ $_methods}"
+    let _count++
+  done
+
+  if [[ -z "$_methods" ]]; then
+    echo >&2 ":: $FUNCNAME: Warning: ed_group has no element."
+    return 0
+  fi
 
   _encoded_data="$(
     {
       echo "set -eux"
       echo "if [[ -f /bocker.sh ]]; then source /bocker.sh; fi"
-      __ed_method_definition $METHOD
-      echo "$METHOD"
+      for METHOD in $_methods; do
+        __ed_method_definition $METHOD
+      done
+      for METHOD in $_methods; do
+        echo $METHOD
+      done
     } \
     | base64 -w0
   )"
 
   echo ""
-  echo "# Bocker method => $METHOD"
+  if [[ $_count -ge 2 ]]; then
+    echo "# Bocker methods => $_methods"
+  else
+    echo "# Bocker method => $_methods"
+  fi
   __ed_ship_encoded_data $_encoded_data
 }
 

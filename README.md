@@ -143,11 +143,12 @@ This function should not contain any function from `PREAMBLE` section.
 
 It can have some special functions
 
-* `ed_copy`: Define your `COPY` statement
-* `ed_add`: Define your `ADD` statement
-* `ed_user`: Define your `USER` statement
-* `ed_workdir`: Define your `WORKDIR` statement
-* `ed_run`: Define your `RUN` statement
+* `ed_copy`: Define your `COPY` statement;
+* `ed_add`: Define your `ADD` statement;
+* `ed_user`: Define your `USER` statement;
+* `ed_workdir`: Define your `WORKDIR` statement;
+* `ed_run`: Define your `RUN` statement;
+* `ed_group`: Group multiple methods into a single `RUN` statement.
 
 `Bocker` will read the contents of this `ed_bocker` function,
 replace every appearance of `ed_*` by `__ed_ship_method ed_*`.
