@@ -5,7 +5,7 @@ source lib/debian.sh
 
 ed_cmd "/bin/true"
 
-ed_main() {
+ed_install_curl() {
   apt-get update
 
   apt-get install -y curl
@@ -14,7 +14,7 @@ ed_main() {
 }
 
 ed_bocker() {
-  ed_main
+  ed_install_curl
 
   if [[ -d "enabled/" ]]; then
     ed_copy enabled/* /example/

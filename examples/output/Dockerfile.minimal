@@ -33,19 +33,19 @@ ENV DEBIAN_FRONTEND noninteractive
 #
 RUN echo c2V0IC1ldXgKaWYgW1sgLWYgL2JvY2tlci5zaCBdXTsgdGhlbiBzb3VyY2UgL2JvY2tlci5zaDsgZmkKZWRfYXB0X2NsZWFuICgpIAp7IAogICAgcm0gLWZ2IC92YXIvY2FjaGUvYXB0LyouYmluOwogICAgcm0gLWZ2IC92YXIvY2FjaGUvYXB0L2FyY2hpdmVzLyouKjsKICAgIHJtIC1mdiAvdmFyL2xpYi9hcHQvbGlzdHMvKi4qOwogICAgYXB0LWdldCBhdXRvY2xlYW4KfQplZF9hcHRfcHVyZ2UgKCkgCnsgCiAgICBhcHQtZ2V0IHB1cmdlIC15IC0tYXV0by1yZW1vdmUgJEA7CiAgICBlZF9hcHRfY2xlYW4KfQplY2hvICcjIS9iaW4vYmFzaCcgPiAvYm9ja2VyLnNoCmVjaG8gJyMgVGhpcyBmaWxlIGlzIGdlbmVyYXRlZCBieSBCb2NrZXIuJyA+PiAvYm9ja2VyLnNoCmRlY2xhcmUgLWYgPj4gL2JvY2tlci5zaAplY2hvICdpZiBbWyAtbiAiJEAiIF1dOyB0aGVuICRAOyBmaTsgJyA+PiAvYm9ja2VyLnNoCmNobW9kIDc1NSAvYm9ja2VyLnNoCg== | base64 -d | bash
 
-# Bocker method => ed_main
+# Bocker method => ed_install_curl
 #
 # | set -eux
 # | if [[ -f /bocker.sh ]]; then source /bocker.sh; fi
-# | ed_main () 
+# | ed_install_curl () 
 # | { 
 # |     apt-get update;
 # |     apt-get install -y curl;
 # |     ed_apt_clean
 # | }
-# | ed_main
+# | ed_install_curl
 #
-RUN echo c2V0IC1ldXgKaWYgW1sgLWYgL2JvY2tlci5zaCBdXTsgdGhlbiBzb3VyY2UgL2JvY2tlci5zaDsgZmkKZWRfbWFpbiAoKSAKeyAKICAgIGFwdC1nZXQgdXBkYXRlOwogICAgYXB0LWdldCBpbnN0YWxsIC15IGN1cmw7CiAgICBlZF9hcHRfY2xlYW4KfQplZF9tYWluCg== | base64 -d | bash
+RUN echo c2V0IC1ldXgKaWYgW1sgLWYgL2JvY2tlci5zaCBdXTsgdGhlbiBzb3VyY2UgL2JvY2tlci5zaDsgZmkKZWRfaW5zdGFsbF9jdXJsICgpIAp7IAogICAgYXB0LWdldCB1cGRhdGU7CiAgICBhcHQtZ2V0IGluc3RhbGwgLXkgY3VybDsKICAgIGVkX2FwdF9jbGVhbgp9CmVkX2luc3RhbGxfY3VybAo= | base64 -d | bash
 
 COPY enabled/test.txt /example/
 
