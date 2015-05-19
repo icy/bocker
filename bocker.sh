@@ -152,7 +152,7 @@ __ed_ship_method() {
     || continue
 
     __ed_ensure_method $METHOD || exit 127
-    _methods="$METHOD${_methods:+ $_methods}"
+    _methods="${_methods:+$_methods }$METHOD"
     let _count++
   done
 
@@ -177,7 +177,10 @@ __ed_ship_method() {
 
   echo ""
   if [[ $_count -ge 2 ]]; then
-    echo "# Bocker methods => $_methods"
+    echo "# Bocker methods:"
+    for METHOD in $_methods; do
+      echo "# - $METHOD"
+    done
   else
     echo "# Bocker method => $_methods"
   fi
