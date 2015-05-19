@@ -148,7 +148,7 @@ __ed_ship_method() {
   esac
 
   for METHOD in $_nextop; do
-    [[ "$METHOD" != "__ed_ship_method" ]] \
+    [[ "$METHOD" != "$FUNCNAME" ]] \
     || continue
 
     __ed_ensure_method $METHOD || exit 127
