@@ -180,7 +180,10 @@ __ed_ship() {
   echo ""
   echo "# Bocker method => $FUNCNAME"
   echo "# * The output is /bocker.sh in the result image."
-  echo "# * List of methods: $(echo $_methods)."
+  echo "# * List of methods:"
+  for METHOD in $_methods; do
+    echo "#   - $METHOD"
+  done
 
   _encoded_data="$(
     {
