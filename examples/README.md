@@ -15,3 +15,7 @@ $ diff output/Dockerfile.minimal Dockerfile
 # Build your image
 $ docker build -t bocker/test .
 ````
+
+## More examples
+
+See also https://github.com/icy/docker.

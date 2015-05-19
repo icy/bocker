@@ -7,14 +7,28 @@ ed_cmd "/bin/true"
 
 ed_install_curl() {
   apt-get update
-
   apt-get install -y curl
 
+  # This is function from `lib/debian.sh`
   ed_apt_clean
+}
+
+ed_group_part_1() {
+  echo "This is part 1 of the group."
+}
+
+ed_group_part_2() {
+  echo "This is part 2 of the group."
 }
 
 ed_bocker() {
   ed_install_curl
+
+  ed_group \
+    ed_group_part_1 \
+    ed_group_part_2
+
+  ed_group # empty group
 
   if [[ -d "enabled/" ]]; then
     ed_copy enabled/* /example/
