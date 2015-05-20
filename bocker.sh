@@ -102,9 +102,15 @@ ed_entrypoint() {
 
 __ed_bocker_filter() {
   echo "ed_bocker()"
-  __ed_method_definition ed_bocker \
-  | awk '{if (NR>1) print}' \
-  | sed -e 's#\b\(ed_[a-z0-9]\+\)#__ed_ship_method \1#gi'
+  echo "{"
+  for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
+    echo ${__MATTER_ED_BOCKER__[$_idx]} \
+    | base64 -d \
+    | awk '{if (NR>2) print}' \
+    | sed -e '$d' \
+    | sed -e 's#\b\(ed_[a-z0-9]\+\)#__ed_ship_method \1#gi'
+  done
+  echo "}"
 }
 
 __ed_method_definition() {
@@ -234,6 +240,15 @@ __ed_ship() {
   __ed_ship_encoded_data $_encoded_data
 }
 
+ed_reuse() {
+  for f in $@; do
+    source $f || exit 1
+    if [[ "$(type -t ed_bocker 2>/dev/null)" == "function" ]]; then
+      __MATTER_ED_BOCKER__+=( $(__ed_method_definition ed_bocker | base64 -w0) )
+    fi
+  done
+}
+
 ########################################################################
 # All default settings
 ########################################################################
@@ -259,10 +274,13 @@ readonly -f \
   ed_maintainer \
   ed_onbuild \
   ed_reset \
+  ed_reuse \
   ed_ship \
   ed_volume
 
 readonly BOCKER_VERSION
+
+export __MATTER_ED_BOCKER__=()
 
 ########################################################################
 # Print version information
@@ -281,7 +299,7 @@ done
 ########################################################################
 
 for f in $@; do
-  source $f || exit
+  ed_reuse $f || exit
 done
 
 ########################################################################

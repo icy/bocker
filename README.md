@@ -120,6 +120,9 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
   the very end of `Dockerfile`. This is very useful when the functions
   are only needed at the run-time, because that really speeds up
   your build process. See example in `examples/lib/debian.sh`.)
+* `ed_reuse`: Load the `Bockerfile`(s) specified in argument,
+  and re-use `ed_docker` from that source if any.
+  All `ed_docker` definitions are additive in order provided.
 
 All these commands can be used multiple times, and/or be put in
 your base libraries. (See `examples/lib/core.sh`.)
