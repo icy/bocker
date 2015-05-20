@@ -1,5 +1,6 @@
 ## v1.1.1
 
+* `ed_env` has new option `--later`
 * Add `ed_reuse` to load and reuse `ed_bocker` from a `Bockerfile`
 * Wrap `base64` output in `RUN` statement
 * Add `ed_group` to group multiple stuff into a group  (Idea from `axit`)

@@ -52,8 +52,17 @@ ed_maintainer() {
 }
 
 ed_env() {
-  local _name="$1"; shift
-  export __MATTER_ENV__="${__MATTER_ENV__:-}^x^x^ENV ${_name^^} $@"
+  local _name="$1"
+
+  if [[ "${1:-}" == "--later" ]]; then
+    shift
+    export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}^x^x^ENV $@"
+    return
+  fi
+
+  shift
+  export __MATTER_ENV__="${__MATTER_ENV__:-}^x^x^ENV $@"
+  return 0
 }
 
 ed_onbuild() {
@@ -338,6 +347,11 @@ done < <(declare -fF | awk '{print $NF}')
 bash < <(__ed_bocker_filter; echo ed_bocker) || exit
 
 __ed_ship --later || exit 127
+
+if [[ -n "${__MATTER_ENV_LATER__:-}" ]]; then
+  echo ""
+  echo "${__MATTER_ENV_LATER__:-}" | __do_matter -uk1
+fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
   echo ""
