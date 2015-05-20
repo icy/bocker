@@ -108,7 +108,7 @@ __ed_bocker_filter() {
 }
 
 __ed_method_definition() {
-  type "${1}" | awk '{if (NR>1) print;}'
+  declare -f "${1}"
 }
 
 __do_matter() {
