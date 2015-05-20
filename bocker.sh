@@ -128,9 +128,11 @@ __ed_ensure_method() {
 
 __ed_ship_encoded_data() {
   echo "#"
-  echo $@ | base64 -d | awk '{printf("# | %s\n", $0);}'
+  echo $@ | sed -e 's# ##g' | base64 -d | awk '{printf("# | %s\n", $0);}'
   echo "#"
-  echo "RUN echo $@ | base64 -d | bash"
+  echo "RUN echo \\"
+  echo $@ | sed -e 's# #\n#g' | while read __; do echo "${__}\\"; done
+  echo "  | base64 -d | bash"
 }
 
 __ed_ship_method() {
@@ -172,7 +174,7 @@ __ed_ship_method() {
         echo $METHOD
       done
     } \
-    | base64 -w0
+    | base64 -w71
   )"
 
   echo ""
@@ -226,7 +228,7 @@ __ed_ship() {
       echo "echo 'if [[ -n \"\$@\" ]]; then \$@; fi; ' >> /bocker.sh"
       echo "chmod 755 /bocker.sh"
     } \
-    | base64 -w0 \
+    | base64 -w71
   )"
 
   __ed_ship_encoded_data $_encoded_data

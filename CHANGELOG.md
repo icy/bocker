@@ -1,5 +1,6 @@
 ## v1.1.1
 
+* Wrap `base64` output in `RUN` statement
 * Add `ed_group` to group multiple stuff into a group  (Idea from `axit`)
 
 ## v1.0.1
