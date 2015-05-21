@@ -51,9 +51,6 @@ The sample `Dockerfile` output is found under
 
 See from https://github.com/icy/docker/.
 
-* `Bockerfile`: https://github.com/icy/docker/blob/master/supervisor/Bockerfile;
-* and its output: https://github.com/icy/docker/blob/master/supervisor/Dockerfile
-
 ## Install and Usage
 
 There is only one `Bash` script `bocker.sh`. Put this script in
