@@ -119,6 +119,18 @@ __ed_bocker_filter() {
   echo "}"
 }
 
+# Important note: The result format is heavily used by other methods,
+# so please don't change, insert or remove anything from this method.
+# Just keep it as simple as possible. An example
+#
+# | foobar()
+# | {
+# |   # stuff
+# | }
+#
+# The method `__ed_bocker_filter` will remove the first two lines
+# and the last line to get the actual body of the definition.
+#
 __ed_method_definition() {
   declare -f "${1}"
 }
