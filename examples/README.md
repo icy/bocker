@@ -18,4 +18,4 @@ $ docker build -t bocker/test .
 
 ## More examples
 
-See also https://github.com/icy/docker.
+See also https://github.com/icy/docker/tree/master/bocker.

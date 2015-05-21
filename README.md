@@ -49,7 +49,7 @@ The sample `Dockerfile` output is found under
 
 ### More examples
 
-See from https://github.com/icy/docker/.
+See from `examples/README.md`.
 
 ## Install and Usage
 
