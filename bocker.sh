@@ -52,15 +52,12 @@ ed_maintainer() {
 }
 
 ed_env() {
-  local _name="$1"
-
   if [[ "${1:-}" == "--later" ]]; then
     shift
     export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}^x^x^ENV $@"
     return
   fi
 
-  shift
   export __MATTER_ENV__="${__MATTER_ENV__:-}^x^x^ENV $@"
   return 0
 }
