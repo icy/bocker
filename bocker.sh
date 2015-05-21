@@ -102,7 +102,7 @@ ed_user() {
 
 ed_expose() {
   while (( $# )); do
-    export __MATTER_EXPOSE__="${__MATTER_EXPOSE__:-}^x^x^EXPOSE $1"
+    export __MATTER_EXPOSE__="${__MATTER_EXPOSE__:-}^x^x^$1"
     shift
   done
 }
@@ -127,7 +127,7 @@ ed_ship() {
 
 ed_volume() {
   while (( $# )); do
-    export __MATTER_VOLUME__="${__MATTER_VOLUME__:-}^x^x^VOLUME $1"
+    export __MATTER_VOLUME__="${__MATTER_VOLUME__:-}^x^x^$1"
     shift
   done
 }
@@ -409,12 +409,12 @@ fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
   echo ""
-  echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1
+  echo "VOLUME $(echo $(echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1))"
 fi
 
 if [[ -n "${__MATTER_EXPOSE__:-}" ]]; then
   echo ""
-  echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk2
+  echo "EXPOSE $(echo $(echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk1))"
 fi
 
 if [[ -n "${__MATTER_USER_LATER__:-}" ]]; then
