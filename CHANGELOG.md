@@ -1,5 +1,6 @@
 ## v1.1.1
 
+* Add `ed_copy`. Only support `--later` in Preamble. Has `--add` option.
 * `ed_env` has new option `--later`
 * Add `ed_reuse` to load and reuse `ed_bocker` from a `Bockerfile`
 * Wrap `base64` output in `RUN` statement

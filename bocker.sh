@@ -62,6 +62,31 @@ ed_env() {
   return 0
 }
 
+ed_copy() {
+  local _later=0
+  local _add=0
+
+  while (( $# )); do
+    case "$1" in
+      "--later") _later=1; shift ;;
+      "--add")   _add=1; shift ;;
+      *)  break;
+    esac
+  done
+
+  if [[ "$_later" == 0 ]]; then
+    echo >&2 ":: $FUNCNAME: Can't use in preamble without --later option"
+    exit 1
+  fi
+
+  if [[ "$_add" == "1" ]]; then
+    export __MATTER_ADD_LATER__="${__MATTER_ADD_LATER__:-}^x^x^ADD $@"
+  else
+    export __MATTER_COPY_LATER__="${__MATTER_COPY_LATER__:-}^x^x^COPY $@"
+  fi
+}
+
+
 ed_onbuild() {
   export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}^x^x^ONBUILD $@"
 }
@@ -285,6 +310,7 @@ readonly -f \
   __ed_ship_encoded_data \
   __ed_ensure_method \
   ed_cmd \
+  ed_copy \
   ed_entrypoint \
   ed_env \
   ed_expose \
@@ -360,6 +386,16 @@ __ed_ship --later || exit 127
 if [[ -n "${__MATTER_ENV_LATER__:-}" ]]; then
   echo ""
   echo "${__MATTER_ENV_LATER__:-}" | __do_matter -uk1
+fi
+
+if [[ -n "${__MATTER_ADD_LATER__:-}" ]]; then
+  echo ""
+  echo "${__MATTER_ADD_LATER__:-}" | __do_matter -uk1
+fi
+
+if [[ -n "${__MATTER_COPY_LATER__:-}" ]]; then
+  echo ""
+  echo "${__MATTER_COPY_LATER__:-}" | __do_matter -uk1
 fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then

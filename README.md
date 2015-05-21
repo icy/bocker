@@ -107,6 +107,8 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 * `ed_volume`: Specify a list of volumes;
 * `ed_onbuild`: Specify trigger on the descendant image build;
 * `ed_cmd`: Define your `CMD` statement;
+* `ed_copy`: Define your `COPY` statement; If you want to have `ADD`,
+    use `--add` option. Must use with the option `--later`;
 * `ed_entrypoint`: Define your `ENTRYPOINT` statement;
 * `ed_ship`: Define a list of methods to be shipped to the image;
   That means, you can define a function `ed_foobar`, and call `ed_ship ed_foobar`
