@@ -28,7 +28,7 @@
 
 set -u
 
-export BOCKER_VERSION=1.1.1
+export BOCKER_VERSION=1.1.2
 
 ed_reset() {
   for _matter in \
