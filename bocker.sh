@@ -86,9 +86,18 @@ ed_copy() {
   fi
 }
 
-
 ed_onbuild() {
   export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}^x^x^ONBUILD $@"
+}
+
+ed_user() {
+  if [[ "${1:-}" != "--later" ]]; then
+    echo >&2 ":: $FUNCNAME: Can't use in preamble without --later option"
+    exit 1
+  fi
+
+  shift
+  export __MATTER_USER_LATER__="USER $@"
 }
 
 ed_expose() {
@@ -406,6 +415,11 @@ fi
 if [[ -n "${__MATTER_EXPOSE__:-}" ]]; then
   echo ""
   echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk2
+fi
+
+if [[ -n "${__MATTER_USER_LATER__:-}" ]]; then
+  echo ""
+  echo "${__MATTER_USER_LATER__:-}" | __do_matter -uk1
 fi
 
 if [[ -n "${__MATTER_CMD__:-}" ]]; then
