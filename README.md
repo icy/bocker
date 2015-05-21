@@ -14,7 +14,8 @@ It looks simple at first, but in a long run, you'll have some problems:
 * It's hard to define and call a `sub-routine` in `RUN` statement,
   because `RUN` is one-line statement. Yes, you can try to do that
   with a mess of unreadable and un-maintainable codes;
-* No way to include some useful parts from other `Dockerfile`.
+* No way to include some useful parts from other `Dockerfile`;
+* No way to create the full `Dockerfile` of an image and its ancestors.
 
 This project is to solve these problems. It will read some `Bash`
 source files, and write new `Dockerfile` to `STDOUT`. The output
@@ -163,6 +164,24 @@ it's your duty to make your definition of `ed_bocker` as simple
 as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
 If you have to do that, put your stuff under some functions,
 ship them to the image with `ed_ship`, and that's just enough.
+
+## `/bocker.sh` script
+
+The result image has `/bocker.sh` script that contains (almost) all
+your functions.
+
+When you use `ed_ship` or invoke some command inside your `ed_bocker`,
+your function definitions are saved originally _(except the comments,
+of course)_ to the `/bocker.sh` script in the result image.
+
+This script only contains functions, and if you provide any arguments
+to it, they are considered as command in the environments where your
+functions are defined. For example
+
+    /bocker.sh ed_my_method
+    # /bocker.sh find
+
+will invoke `ed_my_method` (or `find` command) that you have shipped.
 
 ## Important notes
 
