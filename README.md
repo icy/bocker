@@ -232,7 +232,7 @@ Build command | RUN        | `ed_bocker`           | `ed_foo` invocation
 Declare method| N/A        | ed_ship               |
               |            | ed_ship --later       |
 Grouping      | &&         |                       | ed_group
-              | LABEL      | TODO                  |
+              | LABEL      | TODO                  | echo "LABEL foo=bar"
 Raw statement |            |                       | TODO (ed_raw)
               |            |                       | echo "# Something"
 
