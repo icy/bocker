@@ -214,7 +214,7 @@ Some other things
 * `Dockerfile` statements are ordered. First declared first run.
   In `Bockerfile`, most stuff in `PREAMBLE` are un-ordered;
 * `Dockerfile` supports array form of `ENV`, `EXPOSE`, `VOLUME`;
-  but `Bockerfile` only doesn't. This ways helps `Bockerfile` glues
+  but `Bockerfile` doesn't. This ways helps `Bockerfile` glues
   declarations from multiple library files into a single statement;
 * To group `RUN` commands in `Dockerfile`, you have to use `&&` and
   delete `RUN` from the later statements. In `Bockerfile`, you simply
