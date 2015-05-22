@@ -3,7 +3,7 @@
 * [Description](#description)
 * [Getting started](#getting-started)
   * [A minimal example](#a-minimal-example)
-  * [More examples](#more examples)
+  * [More examples](#more-examples)
 * [Install and Usage](#install-and-usage)
 * [Requirements](#requirements)
 * [Syntax of Bockerfile](#syntax-of-bockerfile)
@@ -11,6 +11,7 @@
   * [Main matter](#main-matter)
   * [Main function ed_bocker](#main-function-ed_bocker)
 * [Bocker.sh script](#bockersh-script)
+* [Dockerfile vs. Bockerfile](#dockerfile-vs-bockerfile)
 * [Important notes](#important-notes)
 * [History](#history)
 * [License. Author](#license-author)
@@ -182,6 +183,28 @@ as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
 If you have to do that, put your stuff under some functions,
 ship them to the image with `ed_ship`, and that's just enough.
 
+### Dockerfile vs. Bockerfile
+
+Dockerfile  | Bockerfile (Preamble)   | ed_bocker
+:--         | :--                     | :--
+FROM        | ed_from                 |
+            | ed_reuse                |
+            | source                  |
+MAINTAINER  | ed_maintainer           |
+ENV         | ed_env                  | TODO
+            | ed_env --later          | TODO
+RUN         |                         | `ed_foo` invocation
+            |                         | ed_run
+VOLUME      | ed_volume               |
+EXPOSE      | ed_expose               |
+ENTRYPOINT  | ed_entrypoint           |
+CMD         | ed_cmd                  |
+ADD         | ed_copy --add --later   | ed_add
+COPY        | ed_copy --later         | ed_copy
+USER        | ed_user --later         | ed_user
+WORKDIR     | TODO                    | ed_workdir
+ONBUILD     | ed_onbuild              |
+
 ## `/bocker.sh` script
 
 The result image has `/bocker.sh` script that contains (almost) all
@@ -199,6 +222,10 @@ functions are defined. For example
     # /bocker.sh find
 
 will invoke `ed_my_method` (or `find` command) that you have shipped.
+
+Because of this, you can simply define a `start-up` script, and
+use `/bocker.sh` to call them. That exactly means, `bocker.sh` can
+be used as your `ENTRYPOINT`.
 
 ## Important notes
 
