@@ -10,7 +10,7 @@
   * [Front matter](#front-matter)
   * [Main matter](#main-matter)
   * [Main function ed_bocker](#main-function-ed_bocker)
-  * [Dockerfile vs. Bockerfile](#dockerfile-vs-bockerfile)
+* [Dockerfile vs. Bockerfile](#dockerfile-vs-bockerfile)
 * [Bocker.sh script](#bockersh-script)
 * [Important notes](#important-notes)
 * [History](#history)
@@ -183,7 +183,7 @@ as possible. Don't use complex stuff like expansion and (`WHO KNOWS`?)
 If you have to do that, put your stuff under some functions,
 ship them to the image with `ed_ship`, and that's just enough.
 
-### Dockerfile vs. Bockerfile
+## Dockerfile vs. Bockerfile
 
 Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
@@ -238,15 +238,16 @@ your function definitions are saved originally _(except the comments,
 of course)_ to the `/bocker.sh` script in the result image.
 
 This script only contains functions, and if you provide any arguments
-to it, they are considered as command in the environments where your
+to it, they are considered as command in the environment where your
 functions are defined. For example
 
+    # ed_ship --later my_method
     /bocker.sh ed_my_method
     # /bocker.sh find
 
 will invoke `ed_my_method` (or `find` command) that you have shipped.
 
-Because of this, you can simply define a `start-up` script, and
+Because of this, you can simply define a `start-up` function, and
 use `/bocker.sh` to call them. That exactly means, `bocker.sh` can
 be used as your `ENTRYPOINT`.
 
