@@ -190,17 +190,17 @@ Facts
 * `Dockerfile` statements are ordered. First declared first run.
   In `Bockerfile`, most stuff in `PREAMBLE` are un-ordered;
 * `Dockerfile` supports array form of `ENV`, `EXPOSE`, `VOLUME`;
-  but `Bockerfile` doesn't. This ways helps `Bockerfile` glues
+  but `Bockerfile` doesn't. This way helps `Bockerfile` to glue
   declarations from multiple library files into a single statement;
 * To group `RUN` commands in `Dockerfile`, you have to use `&&` and
-  delete `RUN` from the later statements. In `Bockerfile`, you simply
+  remove `RUN` from the later statements. In `Bockerfile`, you simply
   use `ed_group`. See [this example][Bockerfile.nginx];
 * To declare a `Bash` function and use them in every `RUN` statement,
   you may put that definition in a file, use `COPY` to transfer the file
   to the container and load it, e.g, `RUN source /mylib.sh; ...`;
   You can love this way or not. In `Bockerfile`, you simply use `ed_ship`
   for build-time methods, and `ed_ship --later` for run-time methods
-  with a zero-layer added.
+  with a minimum number of layers.
 
 Here is a table for quick reference.
 
