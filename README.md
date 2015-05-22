@@ -185,6 +185,25 @@ ship them to the image with `ed_ship`, and that's just enough.
 
 ## Dockerfile vs. Bockerfile
 
+Facts
+
+* `Dockerfile` statements are ordered. First declared first run.
+  In `Bockerfile`, most stuff in `PREAMBLE` are un-ordered;
+* `Dockerfile` supports array form of `ENV`, `EXPOSE`, `VOLUME`;
+  but `Bockerfile` doesn't. This ways helps `Bockerfile` glues
+  declarations from multiple library files into a single statement;
+* To group `RUN` commands in `Dockerfile`, you have to use `&&` and
+  delete `RUN` from the later statements. In `Bockerfile`, you simply
+  use `ed_group`. See [this example][Bockerfile.nginx];
+* To declare a `Bash` function and use them in every `RUN` statement,
+  you may put that definition in a file, use `COPY` to transfer the file
+  to the container and load it, e.g, `RUN source /mylib.sh; ...`;
+  You can love this way or not. In `Bockerfile`, you simply use `ed_ship`
+  for build-time methods, and `ed_ship --later` for run-time methods
+  with a zero-layer added.
+
+Here is a table for quick reference.
+
 Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
 Base image    | FROM       | ed_from               |
@@ -210,23 +229,6 @@ Declare method| N/A        | ed_ship               |
 Grouping      | &&         |                       | ed_group
               | LABEL      | TODO                  |
 Raw statement |            |                       | TODO (ed_raw)
-
-Some other things
-
-* `Dockerfile` statements are ordered. First declared first run.
-  In `Bockerfile`, most stuff in `PREAMBLE` are un-ordered;
-* `Dockerfile` supports array form of `ENV`, `EXPOSE`, `VOLUME`;
-  but `Bockerfile` doesn't. This ways helps `Bockerfile` glues
-  declarations from multiple library files into a single statement;
-* To group `RUN` commands in `Dockerfile`, you have to use `&&` and
-  delete `RUN` from the later statements. In `Bockerfile`, you simply
-  use `ed_group`. See [this example][Bockerfile.nginx];
-* To declare a `Bash` function and use them in every `RUN` statement,
-  you may put that definition in a file, use `COPY` to transfer the file
-  to the container and load it, e.g, `RUN source /mylib.sh; ...`;
-  You can love this way or not. In `Bockerfile`, you simply use `ed_ship`
-  for build-time methods, and `ed_ship --later` for run-time methods
-  with a zero-layer added.
 
 ## `/bocker.sh` script
 
