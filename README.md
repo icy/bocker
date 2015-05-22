@@ -224,7 +224,7 @@ Some other things
   to the container and load it, e.g, `RUN source /mylib.sh; ...`;
   You can love this way or not. In `Bockerfile`, you simply use `ed_ship`
   for build-time methods, and `ed_ship --later` for run-time methods
-  without zero-layer added.
+  with a zero-layer added.
 
 ## `/bocker.sh` script
 
