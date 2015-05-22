@@ -216,19 +216,25 @@ Init script   | ENTRYPOINT | ed_entrypoint         |
               |            | `/bocker.sh`          |
 Init command  | CMD        | ed_cmd                |
               | ONBUILD    | ed_onbuild            |
-Variable      | ENV        | ed_env                | TODO
-              |            | ed_env --later        | TODO
+Variable      | ENV        | ed_env                | echo "ENV foo"
+              |            | ed_env --later        | echo "ENV foo"
 Build command | RUN        | `ed_bocker`           | `ed_foo` invocation
               |            |                       | ed_run
+              |            |                       | echo "RUN foo"
               | ADD        | ed_copy --add --later | ed_add
+              |            |                       | echo "ADD foo bar"
               | COPY       | ed_copy --later       | ed_copy
+              |            |                       | echo "COPY foo bar"
               | USER       | ed_user --later       | ed_user
+              |            |                       | echo "USER foo"
               | WORKDIR    | TODO                  | ed_workdir
+              |            |                       | echo "WORKDIR foo"
 Declare method| N/A        | ed_ship               |
               |            | ed_ship --later       |
 Grouping      | &&         |                       | ed_group
               | LABEL      | TODO                  |
 Raw statement |            |                       | TODO (ed_raw)
+              |            |                       | echo "# Something"
 
 ## `/bocker.sh` script
 
