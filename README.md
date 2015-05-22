@@ -185,30 +185,31 @@ ship them to the image with `ed_ship`, and that's just enough.
 
 ### Dockerfile vs. Bockerfile
 
-Purpose       | Dockerfile | Bockerfile (Preamble) | ed_bocker
+Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
 Base image    | FROM       | ed_from               |
 Base script   |            | ed_reuse              |
 Base script   |            | source                |
 Maintainer    | MAINTAINER | ed_maintainer         |
-Variable      | ENV        | ed_env                | TODO
-              |            | ed_env --later        | TODO
-Build command | RUN        | ed_bocker             | `ed_foo` invocation
-              |            |                       | ed_run
 Volume expose | VOLUME     | ed_volume             |
 Port expose   | EXPOSE     | ed_expose             |
 Init script   | ENTRYPOINT | ed_entrypoint         |
-              |            | /bocker.sh            |
-Run command   | CMD        | ed_cmd                |
+              |            | `/bocker.sh`          |
+Init command  | CMD        | ed_cmd                |
+              | ONBUILD    | ed_onbuild            |
+Variable      | ENV        | ed_env                | TODO
+              |            | ed_env --later        | TODO
+Build command | RUN        | `ed_bocker`           | `ed_foo` invocation
+              |            |                       | ed_run
               | ADD        | ed_copy --add --later | ed_add
               | COPY       | ed_copy --later       | ed_copy
               | USER       | ed_user --later       | ed_user
               | WORKDIR    | TODO                  | ed_workdir
-              | ONBUILD    | ed_onbuild            |
 Declare method| N/A        | ed_ship               |
               |            | ed_ship --later       |
 Grouping      | &&         |                       | ed_group
-              | LABLE      | TODO                  |
+              | LABEL      | TODO                  |
+Raw statement |            |                       | TODO (ed_raw)
 
 Some other things
 
