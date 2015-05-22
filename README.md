@@ -1,3 +1,20 @@
+## Table of contents
+
+* [Description](#description)
+* [Getting started](#getting-started)
+  * [A minimal example](#a-minimal-example)
+  * [More examples](#more examples)
+* [Install and Usage](#install-and-usage)
+* [Requirements](#requirements)
+* [Syntax of Bockerfile](#syntax-of-bockerfile)
+  * [Front matter](#front-matter)
+  * [Main matter](#main-matter)
+  * [Main function ed_bocker](#main-function-ed_bocker)
+* [Bocker.sh script](#bockersh-script)
+* [Important notes](#important-notes)
+* [History](#history)
+* [License. Author](#license-author)
+
 ## Description
 
 `Bocker` makes your `Dockerfile` reusable.
@@ -96,7 +113,7 @@ ed_expose      80
 ed_volume      /example.net/
 ed_cmd         '["/supervisor.sh", "foo", "bar"]'
 ed_ship        foobar
-# ...
+....
 ````
 
 Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
