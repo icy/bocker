@@ -185,25 +185,46 @@ ship them to the image with `ed_ship`, and that's just enough.
 
 ### Dockerfile vs. Bockerfile
 
-Dockerfile  | Bockerfile (Preamble)   | ed_bocker
-:--         | :--                     | :--
-FROM        | ed_from                 |
-            | ed_reuse                |
-            | source                  |
-MAINTAINER  | ed_maintainer           |
-ENV         | ed_env                  | TODO
-            | ed_env --later          | TODO
-RUN         |                         | `ed_foo` invocation
-            |                         | ed_run
-VOLUME      | ed_volume               |
-EXPOSE      | ed_expose               |
-ENTRYPOINT  | ed_entrypoint           |
-CMD         | ed_cmd                  |
-ADD         | ed_copy --add --later   | ed_add
-COPY        | ed_copy --later         | ed_copy
-USER        | ed_user --later         | ed_user
-WORKDIR     | TODO                    | ed_workdir
-ONBUILD     | ed_onbuild              |
+Purpose       | Dockerfile | Bockerfile (Preamble) | ed_bocker
+:--           | :--        | :--                   | :--
+Base image    | FROM       | ed_from               |
+Base script   |            | ed_reuse              |
+Base script   |            | source                |
+Maintainer    | MAINTAINER | ed_maintainer         |
+Variable      | ENV        | ed_env                | TODO
+              |            | ed_env --later        | TODO
+Build command | RUN        | ed_bocker             | `ed_foo` invocation
+              |            |                       | ed_run
+Volume expose | VOLUME     | ed_volume             |
+Port expose   | EXPOSE     | ed_expose             |
+Init script   | ENTRYPOINT | ed_entrypoint         |
+              |            | /bocker.sh            |
+Run command   | CMD        | ed_cmd                |
+              | ADD        | ed_copy --add --later | ed_add
+              | COPY       | ed_copy --later       | ed_copy
+              | USER       | ed_user --later       | ed_user
+              | WORKDIR    | TODO                  | ed_workdir
+              | ONBUILD    | ed_onbuild            |
+Declare method| N/A        | ed_ship               |
+              |            | ed_ship --later       |
+Grouping      | &&         |                       | ed_group
+
+Some other things
+
+* `Dockerfile` statements are ordered. First declared first run.
+  In `Bockerfile`, most stuff in `PREAMBLE` are un-ordered;
+* `Dockerfile` supports array form of `ENV`, `EXPOSE`, `VOLUME`;
+  but `Bockerfile` only doesn't. This ways helps `Bockerfile` glues
+  declarations from multiple library files into a single statement;
+* To group `RUN` commands in `Dockerfile`, you have to use `&&` and
+  delete `RUN` from the later statements. In `Bockerfile`, you simply
+  use `ed_group`. See [this example][Bockerfile.nginx];
+* To declare a `Bash` function and use them in every `RUN` statement,
+  you may put that definition in a file, use `COPY` to transfer the file
+  to the container and load it, e.g, `RUN source /mylib.sh; ...`;
+  You can love this way or not. In `Bockerfile`, you simply use `ed_ship`
+  for build-time methods, and `ed_ship --later` for run-time methods
+  without zero-layer added.
 
 ## `/bocker.sh` script
 
@@ -245,3 +266,5 @@ When the project is started, its name is `EDocker`, that's why you see
 
 This work is released the terms of `MIT` license.
 The author is Anh K. Huynh.
+
+[Bockerfile.nginx]: https://github.com/icy/docker/blob/master/bocker/Bockerfile.nginx
