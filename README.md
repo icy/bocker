@@ -72,12 +72,16 @@ or https://github.com/icy/docker/tree/master/bocker.
 
 ## Install and Usage
 
+### Requirements
+
 `Bocker` requires the popular tools:
 
 * On local machine: `Bash`, `base64`, `grep`, `sed`, `gawk`;
 * On base image: `Bash`, `base64`.
 
 `base64` is a basic tool from `coreutils` package.
+
+### Installation
 
 There is only one `Bash` script `bocker.sh`. Put this script in
 one of your binary directories, and start it with `Bockerfile`
@@ -90,6 +94,10 @@ $ bocker.sh MyBockerfile            # to see Dockerfile output
 The output is written to `STDOUT`. You should check if there is anything
 wrong from `STDERR`, because `Bocker` is unable to check if your source
 file has problem.
+
+### Command line options
+
+There is only `-v` (`--version`) to show the script version.
 
 ## Syntax of `Bockerfile`
 
