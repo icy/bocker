@@ -5,7 +5,6 @@
   * [A minimal example](#a-minimal-example)
   * [More examples](#more-examples)
 * [Install and Usage](#install-and-usage)
-* [Requirements](#requirements)
 * [Syntax of Bockerfile](#syntax-of-bockerfile)
   * [Front matter](#front-matter)
   * [Main matter](#main-matter)
@@ -68,9 +67,17 @@ The sample `Dockerfile` output is found under
 
 ### More examples
 
-See from `examples/README.md`.
+See from `examples/README.md`
+or https://github.com/icy/docker/tree/master/bocker.
 
 ## Install and Usage
+
+`Bocker` requires the popular tools:
+
+* On local machine: `Bash`, `base64`, `grep`, `sed`, `gawk`;
+* On base image: `Bash`, `base64`.
+
+`base64` is a basic tool from `coreutils` package.
 
 There is only one `Bash` script `bocker.sh`. Put this script in
 one of your binary directories, and start it with `Bockerfile`
@@ -83,15 +90,6 @@ $ bocker.sh MyBockerfile            # to see Dockerfile output
 The output is written to `STDOUT`. You should check if there is anything
 wrong from `STDERR`, because `Bocker` is unable to check if your source
 file has problem.
-
-## Requirements
-
-`Bocker` requires the popular tools:
-
-* On local machine: `Bash`, `base64`, `grep`, `sed`, `gawk`;
-* On base image: `Bash`, `base64`.
-
-`base64` is a basic tool from `coreutils` package.
 
 ## Syntax of `Bockerfile`
 
