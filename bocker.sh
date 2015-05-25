@@ -28,7 +28,7 @@
 
 set -u
 
-export BOCKER_VERSION=1.1.2
+export BOCKER_VERSION=1.2.0
 
 ed_reset() {
   for _matter in \
@@ -143,13 +143,19 @@ ed_entrypoint() {
 __ed_bocker_filter() {
   echo "ed_bocker()"
   echo "{"
-  for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
-    echo ${__MATTER_ED_BOCKER__[$_idx]} \
+  while read _encoded_data; do
+    echo $_encoded_data \
     | base64 -d \
     | awk '{if (NR>2) print}' \
     | sed -e '$d' \
     | sed -e 's#\b\(ed_[a-z0-9]\+\)#__ed_ship_method \1#gi'
-  done
+  done < \
+    <( \
+      for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
+         echo ${__MATTER_ED_BOCKER__[$_idx]}
+      done \
+      | awk '!LINES[$0]++'
+    )
   echo "}"
 }
 

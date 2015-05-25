@@ -1,5 +1,7 @@
-## v1.1.2
+## v1.2.0
 
+* Avoid duplicate of `ed_bocker`s when `Bockerfile` is
+  included multiple times thanks to `ed_reuse`;
 * Add `-t` (`--test`) option to test `Bockerfile` file.
 
 ## v1.1.1
