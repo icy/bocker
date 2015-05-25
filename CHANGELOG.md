@@ -1,3 +1,7 @@
+## v1.1.2
+
+* Add `-t` (`--test`) option to test `Bockerfile` file.
+
 ## v1.1.1
 
 * Reduce number of layers by joining VOLUME and EXPOSE statements;

@@ -97,7 +97,8 @@ file has problem.
 
 ### Command line options
 
-There is only `-v` (`--version`) to show the script version.
+* `-v` (`--version`): Print the script version;
+* `-t` (`--test`): Check if there is any problem with input.
 
 ## Syntax of `Bockerfile`
 
