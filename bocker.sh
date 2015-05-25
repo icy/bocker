@@ -302,7 +302,7 @@ ed_reuse() {
 }
 
 __ed_echo() {
-  [[ "${__MATTER_DRY_RUN:-0}" == "1" ]] \
+  [[ "${__MATTER_DRY_RUN__:-0}" == "1" ]] \
   || echo "$@"
 }
 
@@ -339,7 +339,7 @@ readonly -f \
 readonly BOCKER_VERSION
 
 export __MATTER_ED_BOCKER__=()
-export __MATTER_DRY_RUN=0
+export __MATTER_DRY_RUN__=0
 
 ########################################################################
 # Print version information
@@ -354,7 +354,7 @@ while (( $# )); do
   "-t"|"--test")
       shift;
       echo >&2 ":: Bocker test mode enabled. Nothing is printed."
-      export __MATTER_DRY_RUN=1
+      export __MATTER_DRY_RUN__=1
       ;;
   *)  # stop at the first non-option argument
       break;
