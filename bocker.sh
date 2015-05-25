@@ -417,8 +417,8 @@ if [[ -n "${__MATTER_ADD_LATER__:-}" ]]; then
 fi
 
 if [[ -n "${__MATTER_COPY_LATER__:-}" ]]; then
-  echo ""
-  echo "${__MATTER_COPY_LATER__:-}" | __do_matter -uk1
+  __ed_echo ""
+  __ed_echo "${__MATTER_COPY_LATER__:-}" | __do_matter -uk1
 fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
