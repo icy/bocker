@@ -1,5 +1,6 @@
 ## v1.2.0
 
+* Update documentation (`README.md`);
 * Avoid duplicate of `ed_bocker`s when `Bockerfile` is
   included multiple times thanks to `ed_reuse`;
 * Add `-t` (`--test`) option to test `Bockerfile` file.
