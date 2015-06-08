@@ -128,7 +128,8 @@ Think of `FROM`, `MAINTAINER`, `EXPOSE`. They are:
 
 * `ed_from`: Define your `FROM` information;
 * `ed_maintainer`: Define your `MAINTAINER` information;
-* `ed_env`: Define new `ENV` instruction;
+* `ed_env`: Define new `ENV` instruction; Use `--later` option if
+   your environment is only needed at the run-time;
 * `ed_expose`: Specify a list of exposed ports;
 * `ed_volume`: Specify a list of volumes;
 * `ed_onbuild`: Specify trigger on the descendant image build;
