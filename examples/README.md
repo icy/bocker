@@ -6,6 +6,9 @@ To get started with this example, try the following command
 $ mkdir enabled/ -pv
 $ touch enabled/test.txt
 
+# Check if there is any problem
+$ ../bocker.sh -t Bockerfile.minimal
+
 # Generate Dockerfile with `bocker.sh`.
 $ ../bocker.sh Bockerfile.minimal > Dockerfile
 

@@ -1,35 +1,43 @@
 #!/bin/bash
 
-source "$(dirname ${BASH_SOURCE[0]:-.})"/lib/core.sh
-source "$(dirname ${BASH_SOURCE[0]:-.})"/lib/debian.sh
+# You can use `source` or `ed_reuse`. The normal `source` just loads
+# the Bash files, while `ed_reuse` will locate and re-use `ed_bocker`
+# definition (if any). `ed_reuse` is actually similar to `FROM`
+# in the traditional `Dockerfile`.
+
+# In `core.sh`, we have some very common definition, e.g,
+# the base image, the maintainer information.
+ed_reuse "$(dirname ${BASH_SOURCE[0]:-.})"/lib/core.sh
+
+# Because we would use `debian:wheezy`, we will load some specific
+# Debian utils, like `apt-get` stuff, to use them in build-time.
+# E.g, we will define how we want to install and clean up packages.
+ed_reuse "$(dirname ${BASH_SOURCE[0]:-.})"/lib/debian.sh
 
 ed_cmd "/bin/true"
 
-ed_install_curl() {
-  apt-get update
-  apt-get install -y curl
-
-  # This is function from `lib/debian.sh`
-  ed_apt_clean
-}
-
-ed_group_part_1() {
-  echo "This is part 1 of the group."
-}
-
-ed_group_part_2() {
-  echo "This is part 2 of the group."
-}
-
+# `ed_bocker` is a key-word. Your Bockerfile must contain at least
+# one definition for this function. In this example, we will install
+# `curl` package and add some local files from `enables/*`.
 ed_bocker() {
   ed_install_curl
 
+  # The output will be something like this:
+  #
+  #   RUN ... \
+  #       ed_group_part1 \
+  #       && ed_group_part 2
+  #
+  # You don't need to use `&&` explicitly.
   ed_group \
     ed_group_part_1 \
     ed_group_part_2
 
   ed_group # empty group
 
+  # This is an advanced example, though it's rarely used in reality.
+  # Bocker script will check of there is any `enabled/` directory;
+  # If not, it returns with error warning.
   if [[ -d "enabled/" ]]; then
     ed_copy enabled/* /example/
   else
@@ -38,4 +46,26 @@ ed_bocker() {
     echo >&2 "#"
     exit 1
   fi
+}
+
+# A group of command to install `curl` package.
+ed_install_curl() {
+  apt-get update
+  apt-get install -y curl
+
+  # You can add as many comments as you want, because
+  # Bash simply dicards all comments from function defintion.
+  # This is bonus and you hardly do that in a normal Dockerfile.
+
+  # This is function from `lib/debian.sh`.
+  ed_apt_clean
+}
+
+# This is very sipmle command to demonstrate `ed_group` feature
+ed_group_part_1() {
+  echo "This is part 1 of the group."
+}
+
+ed_group_part_2() {
+  echo "This is part 2 of the group."
 }
