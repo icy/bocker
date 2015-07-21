@@ -140,6 +140,10 @@ ed_entrypoint() {
   export __MATTER_ENTRYPOINT__="ENTRYPOINT $@"
 }
 
+# FIXME: The `sed` regexp. only sees two following patterns as *one*:
+# FIXME:    ed_foo  , ed_foo-bar
+# FIXME: The problem is that, we don't know what is the ending mark.
+# FIXME: We only know the starting patern (ed_*).
 __ed_bocker_filter() {
   echo "ed_bocker()"
   echo "{"
@@ -148,7 +152,7 @@ __ed_bocker_filter() {
     | base64 -d \
     | awk '{if (NR>2) print}' \
     | sed -e '$d' \
-    | sed -e 's#\b\(ed_[a-z0-9]\+\)#__ed_ship_method \1#gi'
+    | sed -e 's#\b\(ed_[a-z0-9-]\+\)#__ed_ship_method \1#gi'
   done < \
     <( \
       for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
