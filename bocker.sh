@@ -28,7 +28,7 @@
 
 set -u
 
-export BOCKER_VERSION=1.2.0
+export BOCKER_VERSION=1.3.0
 
 # Reset some environments / settings. This is useful, e.g, when you
 # want to un-expose something from the previous layer (port, volume).
