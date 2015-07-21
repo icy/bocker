@@ -348,6 +348,24 @@ export __MATTER_ED_BOCKER__=()
 export __MATTER_DRY_RUN__=0
 
 ########################################################################
+# Cap aliases
+########################################################################
+
+FROM() { ed_from "$@" ;}
+EXPOSE() { ed_expose "$@" ;}
+VOLUME() { ed_volume "$@" ;}
+MAINTAINER() { ed_maintainer "$@" ;}
+USER() { ed_user "$@" ;}
+CMD() { ed_cmd "$@" ;}
+RUN() { ed_run "$@" ;}
+SHIP() { ed_ship "$@" ;}
+RESET() { ed_reset "$@" ;}
+REUSE() { ed_reuse "$@" ;}
+ENTRYPOINT() { ed_entrypoint "$@" ;}
+ENV() { ed_env "$@" ;}
+ONBUILD() { ed_onbuild "$@" ;}
+
+########################################################################
 # Print version information
 ########################################################################
 
