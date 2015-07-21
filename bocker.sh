@@ -30,6 +30,23 @@ set -u
 
 export BOCKER_VERSION=1.2.0
 
+# Reset some environments / settings. This is useful, e.g, when you
+# want to un-expose something from the previous layer (port, volume).
+#
+# The following invocations are the same
+#
+#   ed_reset __MATTER_ENV
+#   ed_reset env
+#   ed_reset ENV
+#
+# Historically, the method is intended for some special uses, hence
+# the first form (__MATTER_ENV) is provided. But in practice, the
+# method becomes more and more useful. Hence, the two later forms
+# are also supported.
+#
+# By default, when being invoked without any arguments, the method
+# will reset all important matters: ENV, ONBUILD, VOLUME, EXPOSE.
+#
 ed_reset() {
   for _matter in \
     ${@:-\
@@ -39,7 +56,12 @@ ed_reset() {
       __MATTER_EXPOSE__
     }; \
   do
-    export $_matter=
+    case "${_matter:0:9}" in
+    "__MATTER_") ;;
+    *) _matter="__MATTER_${_matter^^}";;
+    esac
+
+    echo export $_matter=
   done
 }
 
