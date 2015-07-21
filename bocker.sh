@@ -61,7 +61,7 @@ ed_reset() {
     *) _matter="__MATTER_${_matter^^}";;
     esac
 
-    echo export $_matter=
+    export $_matter=
   done
 }
 
