@@ -205,12 +205,12 @@ __ed_ship_method() {
   local _count=0
 
   case $_nextop in
-  "ed_add")      shift; __ed_echo ""; __ed_echo "ADD $@"; return 0 ;;
-  "ed_copy")     shift; __ed_echo ""; __ed_echo "COPY $@"; return 0 ;;
-  "ed_user")     shift; __ed_echo ""; __ed_echo "USER $@"; return 0 ;;
-  "ed_workdir")  shift; __ed_echo ""; __ed_echo "WORKDIR $@"; return 0 ;;
-  "ed_run")      shift; __ed_echo ""; __ed_echo "RUN $@"; return 0;;
-  "ed_group")    shift; _nextop="$@" ;;
+      "ADD"|"ed_add")      shift; __ed_echo ""; __ed_echo "ADD $@"; return 0 ;;
+     "COPY"|"ed_copy")     shift; __ed_echo ""; __ed_echo "COPY $@"; return 0 ;;
+     "USER"|"ed_user")     shift; __ed_echo ""; __ed_echo "USER $@"; return 0 ;;
+  "WORKDIR"|"ed_workdir")  shift; __ed_echo ""; __ed_echo "WORKDIR $@"; return 0 ;;
+      "RUN"|"ed_run")      shift; __ed_echo ""; __ed_echo "RUN $@"; return 0;;
+    "GROUP"|"ed_group")    shift; _nextop="$@" ;;
   esac
 
   for METHOD in $_nextop; do
