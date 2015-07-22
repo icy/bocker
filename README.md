@@ -106,6 +106,8 @@ All `Bockerfile`s are `Bash` source files. That means you can write
 your source in some small files, and include them in other files.
 
 The first rule is that every method is started with `ed_`.
+_(An experimental work to support the original statments `FROM`, `RUN`, ...
+can be found under the `cap` branch.)_
 
 ### Front matter
 
