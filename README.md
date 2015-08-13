@@ -67,8 +67,13 @@ The sample `Dockerfile` output is found under
 
 ### More examples
 
-See from `examples/README.md`
-or https://github.com/icy/docker/tree/master/bocker.
+Overloading? Improve caching with `--later`?
+Use `ship` instead of `ADD / COPY` commands?
+
+See more from `examples/README.md` at
+  https://github.com/icy/bocker/blob/master/examples/README.md
+or a collection of `Bockerfile` at
+  https://github.com/icy/docker/tree/master/bocker.
 
 ## Install and Usage
 
@@ -216,7 +221,8 @@ Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
 Base image    | FROM       | ed_from               |
 Base script   |            | ed_reuse              |
-Base script   |            | source                |
+Base script   |            | ed_source             |
+              |            | source                |
 Maintainer    | MAINTAINER | ed_maintainer         |
 Volume expose | VOLUME     | ed_volume             |
 Port expose   | EXPOSE     | ed_expose             |

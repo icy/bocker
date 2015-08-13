@@ -1,3 +1,7 @@
+## v1.2.1
+
+* Add `ed_source` (an alias of `source`)
+
 ## v1.2.0
 
 * Update documentation (`README.md`);

@@ -333,6 +333,12 @@ ed_reuse() {
   done
 }
 
+ed_source() {
+  for f in $@; do
+    source $f || exit 1
+  done
+}
+
 __ed_echo() {
   [[ "${__MATTER_DRY_RUN__:-0}" == "1" ]] \
   || echo "$@"
