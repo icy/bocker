@@ -58,7 +58,7 @@ ed_reset() {
   do
     case "${_matter:0:9}" in
     "__MATTER_") ;;
-    *) _matter="__MATTER_${_matter^^}";;
+    *) _matter="__MATTER_${_matter^^}__";;
     esac
 
     export $_matter=
