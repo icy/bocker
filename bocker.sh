@@ -324,6 +324,10 @@ __ed_ship() {
   __ed_ship_encoded_data $_encoded_data
 }
 
+__ed_before_ship() {
+  :
+}
+
 ed_reuse() {
   for f in $@; do
     source $f || exit 1
@@ -356,11 +360,12 @@ ed_reset       # reset all environments
 readonly -f \
   __do_matter \
   __ed_bocker_filter \
+  __ed_echo \
+  __ed_ensure_method \
   __ed_method_definition \
   __ed_ship \
-  __ed_ship_method \
   __ed_ship_encoded_data \
-  __ed_ensure_method \
+  __ed_ship_method \
   ed_cmd \
   ed_copy \
   ed_entrypoint \
@@ -372,6 +377,8 @@ readonly -f \
   ed_reset \
   ed_reuse \
   ed_ship \
+  ed_source \
+  ed_user \
   ed_volume
 
 readonly BOCKER_VERSION
@@ -433,6 +440,8 @@ if [[ -n "${__MATTER_ENV__:-}" ]]; then
   __ed_echo ""
   __ed_echo "${__MATTER_ENV__:-}" | __do_matter -uk1
 fi
+
+__ed_before_ship
 
 __ed_ship || exit 127
 
