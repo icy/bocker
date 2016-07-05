@@ -325,7 +325,15 @@ __ed_ship() {
 }
 
 __ed_before_ship() {
-  :
+  cat << 'EOF'
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Here is from `__ed_before_ship` method. You may need your own
+# custom one to advance the base image when it doesn't have Bash.
+#
+# The default `__ed_before_ship` method is to print this message.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EOF
 }
 
 ed_reuse() {
