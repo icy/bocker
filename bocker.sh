@@ -53,6 +53,7 @@ ed_reset() {
     ${@:-\
       __MATTER_ENV__ \
       __MATTER_ONBUILD__ \
+      __MATTER_LABEL__ \
       __MATTER_VOLUME__ \
       __MATTER_EXPOSE__
     }; \
@@ -146,6 +147,13 @@ ed_ship() {
     shift
   done
   return 0
+}
+
+ed_label() {
+  while (( $# )); do
+    export __MATTER_LABEL__="${__MATTER_LABEL__:-}^x^x^$1"
+    shift
+  done
 }
 
 ed_volume() {
@@ -381,6 +389,7 @@ readonly -f \
   ed_env \
   ed_expose \
   ed_from \
+  ed_label \
   ed_maintainer \
   ed_onbuild \
   ed_reset \
@@ -475,6 +484,11 @@ fi
 if [[ -n "${__MATTER_COPY_LATER__:-}" ]]; then
   __ed_echo ""
   __ed_echo "${__MATTER_COPY_LATER__:-}" | __do_matter -uk1
+fi
+
+if [[ -n "${__MATTER_LABEL__:-}" ]]; then
+  __ed_echo ""
+  __ed_echo "LABEL $(echo $(echo "${__MATTER_LABEL__:-}" | __do_matter -uk1))"
 fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
