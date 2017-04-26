@@ -221,8 +221,7 @@ Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
 Base image    | FROM       | ed_from               |
 Base script   |            | ed_reuse              |
-Base script   |            | ed_source             |
-              |            | source                |
+Base script   |            | ed_source, sourc      |
 Maintainer    | MAINTAINER | ed_maintainer         |
 Volume expose | VOLUME     | ed_volume             |
 Port expose   | EXPOSE     | ed_expose             |
