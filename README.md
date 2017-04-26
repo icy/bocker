@@ -227,18 +227,17 @@ Volume expose | VOLUME     | ed_volume             |
 Port expose   | EXPOSE     | ed_expose             |
 Init script   | ENTRYPOINT | ed_entrypoint         |
 Init command  | CMD        | ed_cmd                |
-              | ONBUILD    | ed_onbuild            |
+Int command   | ONBUILD    | ed_onbuild            |
 Variable      | ENV        | ed_env [--later]      |
 Build command | RUN        | `ed_bocker`           | `ed_foo`, ed_run
-              | ADD        | ed_copy --add --later | ed_add
-              | COPY       | ed_copy --later       | ed_copy
-              | USER       | ed_user --later       | ed_user
-              | WORKDIR    | TODO                  | ed_workdir
+Build command | ADD        | ed_copy --add --later | ed_add
+Build command | COPY       | ed_copy --later       | ed_copy
+Build command | USER       | ed_user --later       | ed_user
+Build command | WORKDIR    | TODO                  | ed_workdir
 Declare method| N/A        | ed_ship [--later]     |
 Grouping      | &&         |                       | ed_group
-              | LABEL      | TODO                  | echo "LABEL foo=bar"
-Raw statement |            |                       | TODO (ed_raw)
-              |            |                       | echo "# Something"
+Label         | LABEL      | TODO                  | echo "LABEL foo=bar"
+Raw statement |            |                       | secho "# Something"
 
 ## `/bocker.sh` script
 
