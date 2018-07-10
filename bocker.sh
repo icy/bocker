@@ -312,10 +312,11 @@ __ed_ship() {
     __ed_echo "#   - $METHOD"
   done
 
+  # FIXME: -n may not work correctly in /bin/sh
   _encoded_data="$(
     {
       echo "set -eux"
-      echo "if [[ -f '$BOCKER_SH' ]]; then source '$BOCKER_SH'; fi"
+      echo "if [ -f '$BOCKER_SH' ]; then source '$BOCKER_SH'; fi"
 
       for METHOD in $_methods; do
         __ed_method_definition $METHOD
