@@ -4,7 +4,7 @@
 # Author : Anh K. Huynh <kyanh@theslinux.org>
 # License: MIT
 #
-# Copyright © 2015 Anh K. Huynh
+# Copyright © 2015 - 2018 Ky-Anh Huynh
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -28,9 +28,24 @@
 
 set -u
 
+# The bocker version. We change this for every new release
 export BOCKER_VERSION=1.3.0
+
+# Where the Bocker script takes place in the result container
 export BOCKER_SH="${BOCKER_SH:-/bocker.sh}"
-export BOCKER_SHELL="${BOCKER_SHELL:-/usr/bin/env bash}"
+
+# The default shell of result container. Default to `bash`.
+# For alpine system, you may need to use `/bin/sh`. Image developer
+# may change this by using `ed_shell` instruction.
+export BOCKER_SHELL="${BOCKER_SHELL:-bash}"
+
+# The separator internally used by Bocker to build Dockerfile.
+# Hopefully developer will not use this to trick Bocker :)
+export BOCKER_DOT="$(printf \\u2694\\u2620\\u2694)" # ⚔☠⚔
+
+readonly BOCKER_DOT
+readonly BOCKER_VERSION
+readonly BOCKER_SH
 
 # Reset some environments / settings. This is useful, e.g, when you
 # want to un-expose something from the previous layer (port, volume).
@@ -79,11 +94,11 @@ ed_maintainer() {
 ed_env() {
   if [[ "${1:-}" == "--later" ]]; then
     shift
-    export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}^x^x^ENV $@"
+    export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}${BOCKER_DOT}ENV $@"
     return
   fi
 
-  export __MATTER_ENV__="${__MATTER_ENV__:-}^x^x^ENV $@"
+  export __MATTER_ENV__="${__MATTER_ENV__:-}${BOCKER_DOT}ENV $@"
   return 0
 }
 
@@ -105,14 +120,14 @@ ed_copy() {
   fi
 
   if [[ "$_add" == "1" ]]; then
-    export __MATTER_ADD_LATER__="${__MATTER_ADD_LATER__:-}^x^x^ADD $@"
+    export __MATTER_ADD_LATER__="${__MATTER_ADD_LATER__:-}${BOCKER_DOT}ADD $@"
   else
-    export __MATTER_COPY_LATER__="${__MATTER_COPY_LATER__:-}^x^x^COPY $@"
+    export __MATTER_COPY_LATER__="${__MATTER_COPY_LATER__:-}${BOCKER_DOT}COPY $@"
   fi
 }
 
 ed_onbuild() {
-  export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}^x^x^ONBUILD $@"
+  export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}${BOCKER_DOT}ONBUILD $@"
 }
 
 ed_user() {
@@ -127,7 +142,7 @@ ed_user() {
 
 ed_expose() {
   while (( $# )); do
-    export __MATTER_EXPOSE__="${__MATTER_EXPOSE__:-}^x^x^$1"
+    export __MATTER_EXPOSE__="${__MATTER_EXPOSE__:-}${BOCKER_DOT}$1"
     shift
   done
 }
@@ -136,7 +151,7 @@ ed_ship() {
   if [[ "${1:-}" == "--later" ]]; then
     shift
     while (( $# )); do
-      export __MATTER_SHIP_LATER__="${__MATTER_SHIP_LATER__:-}^x^x^$1"
+      export __MATTER_SHIP_LATER__="${__MATTER_SHIP_LATER__:-}${BOCKER_DOT}$1"
       shift
     done
     return
@@ -144,7 +159,7 @@ ed_ship() {
 
   # later => 0
   while (( $# )); do
-    export __MATTER_SHIP__="${__MATTER_SHIP__:-}^x^x^$1"
+    export __MATTER_SHIP__="${__MATTER_SHIP__:-}${BOCKER_DOT}$1"
     shift
   done
   return 0
@@ -152,14 +167,14 @@ ed_ship() {
 
 ed_label() {
   while (( $# )); do
-    export __MATTER_LABEL__="${__MATTER_LABEL__:-}^x^x^$1"
+    export __MATTER_LABEL__="${__MATTER_LABEL__:-}${BOCKER_DOT}$1"
     shift
   done
 }
 
 ed_volume() {
   while (( $# )); do
-    export __MATTER_VOLUME__="${__MATTER_VOLUME__:-}^x^x^$1"
+    export __MATTER_VOLUME__="${__MATTER_VOLUME__:-}${BOCKER_DOT}$1"
     shift
   done
 }
@@ -214,7 +229,7 @@ __ed_method_definition() {
 __do_matter() {
   local _sort_args="${@:--uk1}"
 
-  sed -e 's,\^x^x^,\n,g' \
+  sed -e "s,\\${BOCKER_DOT},\\n,g" \
   | sed -e '/^[[:space:]]*$/d' \
   | sort $_sort_args
 }
@@ -400,8 +415,6 @@ readonly -f \
   ed_source \
   ed_user \
   ed_volume
-
-readonly BOCKER_VERSION
 
 export __MATTER_ED_BOCKER__=()
 export __MATTER_DRY_RUN__=0
