@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Purpose: A Dockerfile compiler
 # Author : Anh K. Huynh <kyanh@theslinux.org>
