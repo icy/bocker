@@ -1,3 +1,14 @@
+## v1.3.0
+
+* Output Dockerfile generally has new internals. That results in
+  rebuilding your Docker image.
+
+* Add `ed_label`
+* Add new internal `__ed_before_ship`
+* New environment `BOCKER_SHELL` allows developer to specify the shell
+  to execute result scripts when building images. This is useful for
+  `Alpine` users. Default to `bash`.
+
 ## v1.2.1
 
 * Add `ed_source` (an alias of `source`)
