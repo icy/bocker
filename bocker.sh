@@ -187,6 +187,10 @@ ed_entrypoint() {
   export __MATTER_ENTRYPOINT__="ENTRYPOINT $@"
 }
 
+ed_shell() {
+  export BOCKER_SHELL="$@"
+}
+
 # FIXME: The `sed` regexp. only sees two following patterns as *one*:
 # FIXME:    ed_foo  , ed_foo-bar
 # FIXME: The problem is that, we don't know what is the ending mark.

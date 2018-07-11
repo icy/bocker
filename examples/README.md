@@ -1,12 +1,25 @@
 ## Table of contents
 
 * [A minimal example](#a-minimal-example)
+* [A non-minimal example](#a-non-minimal-example)
 * [More examples](#more-examples)
   * [Base things](#base-things)
   * [Overloading](#overloading)
   * [Refine the base image](#refine-the-base-image)
 
 ## A minimal example
+
+The file `Bockerfile.alpine` is very minimal. It just creates new image
+from `alpine:3.8` and set up an environment variable. Let's generate
+a `Dockerfile` from it:
+
+```
+$ ../bocker.sh Bockerfile.alpine > Dockerfile
+```
+
+A sample output is found under `output/Dockerfile.alpine`.
+
+## A non minimal example
 
 To get started with this example, try the following command
 
