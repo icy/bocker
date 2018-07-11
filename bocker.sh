@@ -209,7 +209,8 @@ __ed_bocker_filter() {
     | sed -e 's#\b\(ed_[a-z0-9-]\+\)#__ed_ship_method \1#gi'
   done < \
     <( \
-      for _idx in "${!__MATTER_ED_BOCKER__[@]}"; do
+      # shellcheck disable=2068
+      for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
          echo "${__MATTER_ED_BOCKER__[$_idx]}"
       done \
       | awk '!LINES[$0]++'
