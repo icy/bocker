@@ -521,12 +521,12 @@ fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "VOLUME $(echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
+  __ed_echo "VOLUME$(echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
 fi
 
 if [[ -n "${__MATTER_EXPOSE__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "EXPOSE $(echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk1 | awk '{printf(" %s", $0)}')"
+  __ed_echo "EXPOSE$(echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk1 | awk '{printf(" %s", $0)}')"
 fi
 
 if [[ -n "${__MATTER_USER_LATER__:-}" ]]; then
