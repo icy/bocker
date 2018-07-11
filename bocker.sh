@@ -67,14 +67,15 @@ readonly BOCKER_SH
 #
 # shellcheck disable=2120
 ed_reset() {
+  # shellcheck disable=2068
   for _matter in \
-    "${@:-\
+    ${@:-\
       __MATTER_ENV__ \
       __MATTER_ONBUILD__ \
       __MATTER_LABEL__ \
       __MATTER_VOLUME__ \
       __MATTER_EXPOSE__
-    }"; \
+    }; \
   do
     case "${_matter:0:9}" in
     "__MATTER_") ;;
