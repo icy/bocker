@@ -42,28 +42,15 @@ is cacheable, and can be executed by `docker build` command.
 
 ### A minimal example
 
-Take a look at a quite minimal example in `examples/Bockerfile.minimal`.
+Take a look at a quite minimal example in `examples/Bockerfile.alpine`.
 To use this file, type the following commands
 
 ````
 $ cd examples/
-$ ../bocker.sh Bockerfile.minimal
-````
-
-You will get an error. No worry, you just need to create a directory
-to continue
-
-````
-$ mkdir enabled/
-$ touch enabled/test.txt
-$ ../bocker.sh Bockerfile.minimal
+$ ../bocker.sh Bockerfile.alpine > Dockerfile.alpine
 ````
 
 New contents are exactly a `Dockerfile` for your build.
-FYI, that will create an image with `curl` installed.
-
-The sample `Dockerfile` output is found under
-  `examples/output/Dockerfile.minimal`.
 
 ### More examples
 
@@ -81,8 +68,10 @@ or a collection of `Bockerfile` at
 
 `Bocker` requires the popular tools:
 
-* On local machine: `Bash`, `base64`, `grep`, `sed`, `gawk`;
-* On base image: `Bash`, `base64`.
+* On local machine where you run `bocker` script:
+    `Bash`, `base64`, `grep`, `sed`, `gawk`;
+* On base image:
+    `bash` or `sh`, `base64`.
 
 `base64` is a basic tool from `coreutils` package.
 
