@@ -41,6 +41,7 @@ export BOCKER_SHELL="${BOCKER_SHELL:-bash}"
 
 # The separator internally used by Bocker to build Dockerfile.
 # Hopefully developer will not use this to trick Bocker :)
+# shellcheck disable=2155
 export BOCKER_DOT="$(printf \\u2694\\u2620\\u2694)" # ⚔☠⚔
 
 readonly BOCKER_DOT
@@ -64,41 +65,42 @@ readonly BOCKER_SH
 # By default, when being invoked without any arguments, the method
 # will reset all important matters: ENV, ONBUILD, VOLUME, EXPOSE.
 #
+# shellcheck disable=2120
 ed_reset() {
   for _matter in \
-    ${@:-\
+    "${@:-\
       __MATTER_ENV__ \
       __MATTER_ONBUILD__ \
       __MATTER_LABEL__ \
       __MATTER_VOLUME__ \
       __MATTER_EXPOSE__
-    }; \
+    }"; \
   do
     case "${_matter:0:9}" in
     "__MATTER_") ;;
     *) _matter="__MATTER_${_matter^^}__";;
     esac
 
-    export $_matter=
+    export "${_matter}"=
   done
 }
 
 ed_from() {
-  export __FROM="$@"
+  export __FROM="$*"
 }
 
 ed_maintainer() {
-  export __MAINTAINER="$@"
+  export __MAINTAINER="$*"
 }
 
 ed_env() {
   if [[ "${1:-}" == "--later" ]]; then
     shift
-    export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}${BOCKER_DOT}ENV $@"
+    export __MATTER_ENV_LATER__="${__MATTER_ENV_LATER__:-}${BOCKER_DOT}ENV $*"
     return
   fi
 
-  export __MATTER_ENV__="${__MATTER_ENV__:-}${BOCKER_DOT}ENV $@"
+  export __MATTER_ENV__="${__MATTER_ENV__:-}${BOCKER_DOT}ENV $*"
   return 0
 }
 
@@ -115,29 +117,29 @@ ed_copy() {
   done
 
   if [[ "$_later" == 0 ]]; then
-    echo >&2 ":: $FUNCNAME: Can't use in preamble without --later option"
+    echo >&2 ":: ${FUNCNAME[0]}: Can't use in preamble without --later option"
     exit 1
   fi
 
   if [[ "$_add" == "1" ]]; then
-    export __MATTER_ADD_LATER__="${__MATTER_ADD_LATER__:-}${BOCKER_DOT}ADD $@"
+    export __MATTER_ADD_LATER__="${__MATTER_ADD_LATER__:-}${BOCKER_DOT}ADD $*"
   else
-    export __MATTER_COPY_LATER__="${__MATTER_COPY_LATER__:-}${BOCKER_DOT}COPY $@"
+    export __MATTER_COPY_LATER__="${__MATTER_COPY_LATER__:-}${BOCKER_DOT}COPY $*"
   fi
 }
 
 ed_onbuild() {
-  export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}${BOCKER_DOT}ONBUILD $@"
+  export __MATTER_ONBUILD__="${__MATTER_ONBUILD__:-}${BOCKER_DOT}ONBUILD $*"
 }
 
 ed_user() {
   if [[ "${1:-}" != "--later" ]]; then
-    echo >&2 ":: $FUNCNAME: Can't use in preamble without --later option"
+    echo >&2 ":: ${FUNCNAME[0]}: Can't use in preamble without --later option"
     exit 1
   fi
 
   shift
-  export __MATTER_USER_LATER__="USER $@"
+  export __MATTER_USER_LATER__="USER $*"
 }
 
 ed_expose() {
@@ -180,15 +182,15 @@ ed_volume() {
 }
 
 ed_cmd() {
-  export __MATTER_CMD__="CMD $@"
+  export __MATTER_CMD__="CMD $*"
 }
 
 ed_entrypoint() {
-  export __MATTER_ENTRYPOINT__="ENTRYPOINT $@"
+  export __MATTER_ENTRYPOINT__="ENTRYPOINT $*"
 }
 
 ed_shell() {
-  export BOCKER_SHELL="$@"
+  export BOCKER_SHELL="$*"
 }
 
 # FIXME: The `sed` regexp. only sees two following patterns as *one*:
@@ -198,16 +200,16 @@ ed_shell() {
 __ed_bocker_filter() {
   echo "ed_bocker()"
   echo "{"
-  while read _encoded_data; do
-    echo $_encoded_data \
+  while read -r _encoded_data; do
+    echo "${_encoded_data}" \
     | base64 -d \
     | awk '{if (NR>2) print}' \
     | sed -e '$d' \
     | sed -e 's#\b\(ed_[a-z0-9-]\+\)#__ed_ship_method \1#gi'
   done < \
     <( \
-      for _idx in ${!__MATTER_ED_BOCKER__[@]}; do
-         echo ${__MATTER_ED_BOCKER__[$_idx]}
+      for _idx in "${!__MATTER_ED_BOCKER__[@]}"; do
+         echo "${__MATTER_ED_BOCKER__[$_idx]}"
       done \
       | awk '!LINES[$0]++'
     )
@@ -231,15 +233,16 @@ __ed_method_definition() {
 }
 
 __do_matter() {
-  local _sort_args="${@:--uk1}"
+  local _sort_args="${*:--uk1}"
 
+  # shellcheck disable=2086
   sed -e "s,\\${BOCKER_DOT},\\n,g" \
   | sed -e '/^[[:space:]]*$/d' \
   | sort $_sort_args
 }
 
 __ed_ensure_method() {
-  if [[ "$(type -t ${1:-})" != "function" ]]; then
+  if [[ "$(type -t "${1:-}")" != "function" ]]; then
     echo >&2 ":: Bocker: method '${1:-}' not found or not a function"
     return 1
   fi
@@ -247,10 +250,10 @@ __ed_ensure_method() {
 
 __ed_ship_encoded_data() {
   __ed_echo "#"
-  __ed_echo $@ | sed -e 's# ##g' | base64 -d | awk '{printf("# | %s\n", $0);}'
+  __ed_echo "$@" | sed -e 's# ##g' | base64 -d | awk '{printf("# | %s\n", $0);}'
   __ed_echo "#"
   __ed_echo "RUN echo \\"
-  __ed_echo $@ | sed -e 's# #\n#g' | while read __; do echo "${__}\\"; done
+  __ed_echo "$@" | sed -e 's# #\n#g' | while read -r __; do echo "${__}\\"; done
   __ed_echo "  | base64 -d | $BOCKER_SHELL"
 }
 
@@ -260,25 +263,25 @@ __ed_ship_method() {
   local _count=0
 
   case $_nextop in
-  "ed_add")      shift; __ed_echo ""; __ed_echo "ADD $@"; return 0 ;;
-  "ed_copy")     shift; __ed_echo ""; __ed_echo "COPY $@"; return 0 ;;
-  "ed_user")     shift; __ed_echo ""; __ed_echo "USER $@"; return 0 ;;
-  "ed_workdir")  shift; __ed_echo ""; __ed_echo "WORKDIR $@"; return 0 ;;
-  "ed_run")      shift; __ed_echo ""; __ed_echo "RUN $@"; return 0;;
-  "ed_group")    shift; _nextop="$@" ;;
+  "ed_add")      shift; __ed_echo ""; __ed_echo "ADD $*"; return 0 ;;
+  "ed_copy")     shift; __ed_echo ""; __ed_echo "COPY $*"; return 0 ;;
+  "ed_user")     shift; __ed_echo ""; __ed_echo "USER $*"; return 0 ;;
+  "ed_workdir")  shift; __ed_echo ""; __ed_echo "WORKDIR $*"; return 0 ;;
+  "ed_run")      shift; __ed_echo ""; __ed_echo "RUN $*"; return 0;;
+  "ed_group")    shift; _nextop="${*}" ;;
   esac
 
   for METHOD in $_nextop; do
-    [[ "$METHOD" != "$FUNCNAME" ]] \
+    [[ "$METHOD" != "${FUNCNAME[0]}" ]] \
     || continue
 
-    __ed_ensure_method $METHOD || exit 127
-    _methods="${_methods:+$_methods }$METHOD"
+    __ed_ensure_method "${METHOD}" || exit 127
+    _methods="${_methods:+$_methods }${METHOD}"
     let _count++
   done
 
   if [[ -z "$_methods" ]]; then
-    echo >&2 ":: $FUNCNAME: Warning: ed_group has no element."
+    echo >&2 ":: ${FUNCNAME[0]}: Warning: ed_group has no element."
     return 0
   fi
 
@@ -287,10 +290,10 @@ __ed_ship_method() {
       echo "set -eux"
       echo "if [ -f '$BOCKER_SH' ]; then source '$BOCKER_SH'; fi"
       for METHOD in $_methods; do
-        __ed_method_definition $METHOD
+        __ed_method_definition "${METHOD}"
       done
       for METHOD in $_methods; do
-        echo $METHOD
+        echo "${METHOD}"
       done
     } \
     | base64 -w71
@@ -305,7 +308,7 @@ __ed_ship_method() {
   else
     __ed_echo "# Bocker method => $_methods"
   fi
-  __ed_ship_encoded_data $_encoded_data
+  __ed_ship_encoded_data "${_encoded_data}"
 }
 
 __ed_ship() {
@@ -321,12 +324,12 @@ __ed_ship() {
   [[ -n "$_methods" ]] || return 0
 
   for METHOD in $_methods; do
-    __ed_ensure_method $METHOD || return 127
+    __ed_ensure_method "${METHOD}" || return 127
   done
 
   __ed_echo ""
-  __ed_echo "# Bocker method => $FUNCNAME"
-  __ed_echo "# * The output is $BOCKER_SH in the result image."
+  __ed_echo "# Bocker method => ${FUNCNAME[0]}"
+  __ed_echo "# * The output is ${BOCKER_SH} in the result image."
   __ed_echo "# * List of methods:"
   for METHOD in $_methods; do
     __ed_echo "#   - $METHOD"
@@ -336,22 +339,22 @@ __ed_ship() {
   _encoded_data="$(
     {
       echo "set -eux"
-      echo "if [ -f '$BOCKER_SH' ]; then source '$BOCKER_SH'; fi"
+      echo "if [ -f '${BOCKER_SH}' ]; then source '${BOCKER_SH}'; fi"
 
       for METHOD in $_methods; do
-        __ed_method_definition $METHOD
+        __ed_method_definition "${METHOD}"
       done
 
-      echo "echo '#!$BOCKER_SHELL' > '$BOCKER_SH'"
-      echo "echo '# This file is generated by Bocker.' >> '$BOCKER_SH'"
-      echo "declare -f >> '$BOCKER_SH'"
-      echo "echo 'if [ -n \"\$@\" ]; then \$@; fi; ' >> '$BOCKER_SH'"
-      echo "chmod 755 '$BOCKER_SH'"
+      echo "echo '#!${BOCKER_SHELL}' > '${BOCKER_SH}'"
+      echo "echo '# This file is generated by Bocker.' >> '${BOCKER_SH}'"
+      echo "declare -f >> '${BOCKER_SH}'"
+      echo "echo 'if [ -n \"\$@\" ]; then \$@; fi; ' >> '${BOCKER_SH}'"
+      echo "chmod 755 '${BOCKER_SH}'"
     } \
     | base64 -w71
   )"
 
-  __ed_ship_encoded_data $_encoded_data
+  __ed_ship_encoded_data "${_encoded_data}"
 }
 
 __ed_before_ship() {
@@ -367,17 +370,19 @@ EOF
 }
 
 ed_reuse() {
-  for f in $@; do
-    source $f || exit 1
+  for f in "$@"; do
+    # shellcheck disable=1090
+    source "${f}" || exit 1
     if [[ "$(type -t ed_bocker 2>/dev/null)" == "function" ]]; then
-      __MATTER_ED_BOCKER__+=( $(__ed_method_definition ed_bocker | base64 -w0) )
+      __MATTER_ED_BOCKER__+=( "$(__ed_method_definition ed_bocker | base64 -w0)" )
     fi
   done
 }
 
 ed_source() {
-  for f in $@; do
-    source $f || exit 1
+  for f in "$@"; do
+    # shellcheck disable=1090
+    source "${f}" || exit 1
   done
 }
 
@@ -393,6 +398,7 @@ __ed_echo() {
 ed_from        debian:wheezy
 ed_maintainer  "Anh K. Huynh <kyanh@theslinux.org>"
 ed_env         DEBIAN_FRONTEND noninteractive
+# shellcheck disable=2119
 ed_reset       # reset all environments
 
 readonly -f \
@@ -447,8 +453,8 @@ done
 # Now loading all users definitions
 ########################################################################
 
-for f in $@; do
-  ed_reuse $f || exit
+for f in "${@}"; do
+  ed_reuse "${f}" || exit
 done
 
 ########################################################################
@@ -482,8 +488,9 @@ __ed_before_ship
 
 __ed_ship || exit 127
 
-while read METHOD; do
-  export -f $METHOD
+while read -r METHOD; do
+  # shellcheck disable=2163
+  export -f "${METHOD}"
 done < <(declare -fF | awk '{print $NF}')
 
 bash < <(__ed_bocker_filter; echo ed_bocker) || exit
@@ -507,17 +514,17 @@ fi
 
 if [[ -n "${__MATTER_LABEL__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "LABEL $(echo $(echo "${__MATTER_LABEL__:-}" | __do_matter -uk1))"
+  __ed_echo "LABEL$(echo "${__MATTER_LABEL__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
 fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "VOLUME $(echo $(echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1))"
+  __ed_echo "VOLUME $(echo "${__MATTER_VOLUME__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
 fi
 
 if [[ -n "${__MATTER_EXPOSE__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "EXPOSE $(echo $(echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk1))"
+  __ed_echo "EXPOSE $(echo "${__MATTER_EXPOSE__:-}" | __do_matter -unk1 | awk '{printf(" %s", $0)}')"
 fi
 
 if [[ -n "${__MATTER_USER_LATER__:-}" ]]; then
