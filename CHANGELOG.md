@@ -8,6 +8,7 @@
 * New environment `BOCKER_SHELL` allows developer to specify the shell
   to execute result scripts when building images. This is useful for
   `Alpine` users. Default to `bash`.
+* New primitive `ed_shell` to modify `BOCKER_SHELL`.
 
 ## v1.2.1
 
