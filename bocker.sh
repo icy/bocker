@@ -37,7 +37,7 @@ export BOCKER_SH="${BOCKER_SH:-/bocker.sh}"
 # The default shell of result container. Default to `bash`.
 # For alpine system, you may need to use `/bin/sh`. Image developer
 # may change this by using `ed_shell` instruction.
-export BOCKER_SHELL="${BOCKER_SHELL:-bash}"
+export BOCKER_SHELL="${BOCKER_SHELL:-/usr/bin/env bash}"
 
 # The separator internally used by Bocker to build Dockerfile.
 # Hopefully developer will not use this to trick Bocker :)
