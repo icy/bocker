@@ -1,3 +1,7 @@
+## v1.3.1
+
+* Fix default `BOCKER_SHELL` (Default to `/usr/bin/env bash`)
+
 ## v1.3.0
 
 * Output Dockerfile generally has new internals. That results in
