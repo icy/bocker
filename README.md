@@ -210,7 +210,7 @@ Purpose       | Dockerfile | Bockerfile (Preamble) | `ed_bocker`
 :--           | :--        | :--                   | :--
 Base image    | FROM       | ed_from               |
 Base script   |            | ed_reuse              |
-Base script   |            | ed_source, sourc      |
+Base script   |            | ed_source, source     |
 Maintainer    | MAINTAINER | ed_maintainer         |
 Volume expose | VOLUME     | ed_volume             |
 Port expose   | EXPOSE     | ed_expose             |
@@ -225,8 +225,8 @@ Build command | USER       | ed_user --later       | ed_user
 Build command | WORKDIR    | TODO                  | ed_workdir
 Declare method| N/A        | ed_ship [--later]     |
 Grouping      | &&         |                       | ed_group
-Label         | LABEL      | TODO                  | echo "LABEL foo=bar"
-Raw statement |            |                       | secho "# Something"
+Label         | LABEL      | ed_label              | echo "LABEL foo=bar"
+Raw statement |            |                       | echo "# Something"
 
 ## `/bocker.sh` script
 
