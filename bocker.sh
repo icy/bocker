@@ -485,6 +485,7 @@ __ed_echo "###############################################################"
 
 __ed_echo ""
 
+# FIXME: multiple support may be broken
 if [[ -n "${__MATTER_ARG__:-}" ]]; then
   __ed_echo ""
   __ed_echo "ARG$(echo "${__MATTER_ARG__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
@@ -526,9 +527,10 @@ if [[ -n "${__MATTER_COPY_LATER__:-}" ]]; then
   __ed_echo "${__MATTER_COPY_LATER__:-}" | __do_matter -uk1
 fi
 
+# FIXME: multiple support is broken
 if [[ -n "${__MATTER_LABEL__:-}" ]]; then
   __ed_echo ""
-  __ed_echo "LABEL$(echo "${__MATTER_LABEL__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
+  __ed_echo "$(echo "${__MATTER_LABEL__:-}" | __do_matter -uk1 | awk '{printf("LABEL %s\n", $0)}')"
 fi
 
 if [[ -n "${__MATTER_VOLUME__:-}" ]]; then
