@@ -177,7 +177,7 @@ ed_label() {
 }
 
 ed_arg() {
-  export __MATTER_ARG__="${__MATTER_ARG__:-}${BOCKER_DOT}$*"
+  export __MATTER_ARG__="${__MATTER_ARG__:-}${BOCKER_DOT}ARG $*"
 }
 
 ed_volume() {
@@ -485,14 +485,13 @@ __ed_echo "###############################################################"
 
 __ed_echo ""
 
-# FIXME: multiple support may be broken
-if [[ -n "${__MATTER_ARG__:-}" ]]; then
-  __ed_echo ""
-  __ed_echo "ARG$(echo "${__MATTER_ARG__:-}" | __do_matter -uk1 | awk '{printf(" %s", $0)}')"
-fi
-
 __ed_echo "FROM $__FROM"
 __ed_echo "MAINTAINER $__MAINTAINER"
+
+if [[ -n "${__MATTER_ARG__:-}" ]]; then
+  __ed_echo ""
+  __ed_echo "${__MATTER_ARG__:-}" | __do_matter -uk1
+fi
 
 if [[ -n "${__MATTER_ENV__:-}" ]]; then
   __ed_echo ""
