@@ -39,6 +39,9 @@ export BOCKER_SH="${BOCKER_SH:-/bocker.sh}"
 # may change this by using `ed_shell` instruction.
 export BOCKER_SHELL="${BOCKER_SHELL:-/usr/bin/env bash}"
 
+# BOCKET_DOT requires this. Reported in #12. Thanks to bmocm.
+export LANG=en_US.UTF-8
+
 # The separator internally used by Bocker to build Dockerfile.
 # Hopefully developer will not use this to trick Bocker :)
 # shellcheck disable=2155
