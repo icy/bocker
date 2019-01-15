@@ -1,3 +1,9 @@
+## v1.3.2
+
+* Enforce LANG=en_US.UTF-8 (#12, @bmocm)
+* Update examples
+* Fix problem with `ARG` position (#11, @bmocm)
+
 ## v1.3.1
 
 * Fix default `BOCKER_SHELL` (Default to `/usr/bin/env bash`)
