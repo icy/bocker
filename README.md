@@ -43,6 +43,21 @@ is cacheable, and can be executed by `docker build` command.
 ### A minimal example
 
 Take a look at a quite minimal example in `examples/Bockerfile.alpine`.
+
+```
+#!/usr/bin/env bash
+
+# The default Alpine shell /bin/sh
+
+ed_shell  /bin/sh
+ed_from   alpine:3.8
+ed_env    --later Hello World
+
+ed_bocker() {
+  :
+}
+```
+
 To use this file, type the following commands
 
 ````
