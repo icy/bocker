@@ -1,3 +1,5 @@
+*WARNING*: I haven't had time to maintain this project. Use them at your own risk. Thank you for your understanding.
+
 ## Table of contents
 
 * [Description](#description)
